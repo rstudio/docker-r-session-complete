@@ -1,4 +1,4 @@
-FROM r-session-base:centos7-1.2.1320-1
+FROM rstudio/r-session-base:centos7-1.2.1320-1
 
 # Install R and R packages -----------------------------------------------------
 
