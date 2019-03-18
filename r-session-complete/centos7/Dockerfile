@@ -1,8 +1,14 @@
-FROM r-session-base:centos7
+FROM r-session-base:centos7-1.2.1320-1
 
 # Install R and R packages -----------------------------------------------------
 
 ARG R_VERSION=3.5.2
+
+# Install required packages
+RUN yum update -y && yum install -y \
+# wget rrdtool libuser-dev \
+# openssl-devel libcurl-devel libxml2-devel \
+git subversion which
 
 # Install build dependencies
 RUN set -x && yum install -y epel-release make gcc gcc-c++

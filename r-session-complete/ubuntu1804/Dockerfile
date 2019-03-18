@@ -1,9 +1,15 @@
-FROM r-session-base:ubuntu1804
+FROM r-session-base:ubuntu1804-1.2.1320-1
 
 # Install R and R packages -----------------------------------------------------
 
 ARG R_VERSION=3.5.2
 ARG DEBIAN_FRONTEND=noninteractive
+
+# Install required packages
+RUN apt-get update -y && apt-get install -y \
+# wget gdebi rrdtool libuser libuser1-dev \
+# libssl1.0.0 libssl-dev libcurl4-gnutls-dev libxml2-dev \
+git subversion locales
 
 # Install R dependencies
 RUN set -x \
