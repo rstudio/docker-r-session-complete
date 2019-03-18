@@ -1,4 +1,4 @@
-FROM rstudio/r-session-base:ubuntu1804-1.2.1320-1
+FROM rstudio/r-session-base:trusty-1.2.1320-1
 
 # Install R and R packages -----------------------------------------------------
 
