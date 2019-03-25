@@ -2,7 +2,7 @@ FROM rstudio/r-session-base:centos7-1.2.1320-1
 
 # Install R and R packages -----------------------------------------------------
 
-ARG R_VERSION=3.5.2
+ARG R_VERSION=3.5.3
 
 # Install required packages
 RUN yum update -y && yum install -y \
