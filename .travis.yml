@@ -5,28 +5,22 @@ env:
   global:
     - DOCKER_USERNAME=koverholt
     - secure: "mvhffOvj0UKigKAL/CnH2eDh1HnX/3cP2IaKe9kmeCAUoOsUTg2DsCIP8xvuleGjhoRVvMM0DgIfxnCLDrzjmrwlDfa2S3vJRCZ5OaQYUcPV8Qn1B+UQstZLOGUPSRa1IHISdCgxL+IhIxPPhXZKT7k17rX3O7uPAoSvvj0H/O8VYgRGFmO+xFYyWx4N24gk34e5LgRDgW6ijQSVjXrThJTumUW8OiL+9HCncnGmmYwmzKrL50ynV6aztwXrWh93lc9EaGtz6Z56Ihec3HA8KE7MQCX4R2QtnJXCGKO+iTEtE8XglpPAEvmpqhewXXCbegxw8ueKfdehE11MPTOWPiR1GfUKlctRigo3rMH23vq7NLZbE7EaTMaF3lYHy6MPSr1ItMfsO+Lk/jtXCjeWtehAFB/gwzCABHyc8BN7hG0x0mWSWeJl7VaTgPqQHdm/1CpDOpShoc6R4esT/V4BRPNs/TxrccSGlUwggxjjo5fD3XJRds2AnbUVx0Hc543zh3jraqg2jnCKMWror8SCtVp1z6TKeOxrDTm/Gn0VSFTLXoXUaDUwRbuJRxPHual66zbVCwq0F6cvyCs6q/l8DmcqurbuxrOGgS9VDMJ1M1jHs1zesbb8d0YPnTZSR+Q2dFEB9DdRlYwr3QvZDhBFPuPjvfkJYdoK9HDjPZYOiLM="
+  matrix:
+    - DISTRO=centos7
+    - DISTRO=trusty
 
-jobs:
-  include:
-    - stage: "Build image"
-      env:
-      - DISTRO=centos7
-      - DISTRO=trusty
-      script:
-        - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-        - cd r-session-complete/${DISTRO}
-        - docker build . -t r-session-complete
-        - docker images
-    - stage: "Tag image"
-      env:
-      - DISTRO=centos7
-      - DISTRO=trusty
-      script:
-        - docker tag rstudio/r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
-        - docker images
-    - stage: "Push image"
-      env:
-      - DISTRO=centos7
-      - DISTRO=trusty
-      script: docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
-      if: branch = master
+script:
+  - cd r-session-complete/${DISTRO}
+  - docker build . -t r-session-complete
+  - docker images
+  - docker tag rstudio/r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
+  - docker images
+
+before_deploy:
+  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+
+deploy:
+  - provider: script
+    script: docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
+  on:
+    branch: master
