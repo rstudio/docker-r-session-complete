@@ -11,9 +11,7 @@ env:
 
 script:
   - cd r-session-complete/${DISTRO}
-  - docker build . -t r-session-complete
-  - docker images
-  - docker tag rstudio/r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
+  - docker build . -t rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
   - docker images
 
 deploy:
