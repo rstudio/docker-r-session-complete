@@ -11,7 +11,7 @@ the image on Docker Hub, you can tag a release on master using the following
 steps:
 
 1. Bump versions of base Docker images in Dockerfiles
-2. Run the following commands:
+2. Run the following commands, editing the version string as needed:
 
 ```
 export VERSION=1.2.1330-2-r-3.5.3
