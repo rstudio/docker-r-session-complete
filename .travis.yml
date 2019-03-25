@@ -20,7 +20,7 @@ before_deploy:
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
 deploy:
-  - provider: script
-    script: docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
+  provider: script
+  script: docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
   on:
     branch: master
