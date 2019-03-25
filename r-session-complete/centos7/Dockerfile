@@ -3,6 +3,7 @@ FROM rstudio/r-session-base:centos7-1.2.1320-1
 # Install R and R packages -----------------------------------------------------
 
 ARG R_VERSION=3.5.3
+ARG PRO_DRIVERS_VERSION=7C152C12
 
 # Install required packages
 RUN yum update -y && yum install -y \
@@ -20,10 +21,10 @@ RUN set -x \
 
 # Install R from source
 RUN cd /opt && mkdir R && cd R \
-&& wget https://cran.r-project.org/src/base/R-3/R-$R_VERSION.tar.gz \
-&& tar zxvf R-$R_VERSION.tar.gz \
-&& cd R-$R_VERSION  \
-&& ./configure --prefix=/opt/R/$R_VERSION --enable-memory-profiling \
+&& wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
+&& tar zxvf R-${R_VERSION}.tar.gz \
+&& cd R-${R_VERSION}  \
+&& ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
 --enable-R-shlib --with-blas --with-lapack \
 && make \
 && make install \
@@ -31,13 +32,22 @@ RUN cd /opt && mkdir R && cd R \
 && rm -rf /opt/R/R-${R_VERSION}
 
 # Install R packages
-RUN /opt/R/$R_VERSION/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' \
-&& /opt/R/$R_VERSION/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' \
-&& /opt/R/$R_VERSION/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' \
-&& /opt/R/$R_VERSION/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' \
+&& /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' \
+&& /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' \
+&& /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
 
 # Include R in PATH
-ENV PATH="/opt/R/$R_VERSION/bin:${PATH}"
+ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
+
+# Install RStudio Professional Drivers
+RUN yum update -y && yum install -y unixODBC unixODBC-devel
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+RUN mkdir -p /opt/rstudio-drivers \
+&& cd /opt/rstudio-drivers \
+&& wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh \
+&& chmod +x odbc-install.sh \
+&& ./odbc-install.sh
 
 # Set the locale
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8
