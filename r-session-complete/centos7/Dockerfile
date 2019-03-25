@@ -6,7 +6,8 @@ ARG R_VERSION=3.5.3
 
 # Install required packages
 RUN yum update -y && yum install -y \
-git subversion which libxml2-devel
+libxml2-devel \
+git subversion which
 
 # Install build dependencies
 RUN set -x && yum install -y epel-release make gcc gcc-c++
