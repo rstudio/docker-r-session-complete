@@ -45,7 +45,7 @@ RUN mkdir -p /opt/rstudio-drivers \
 && cd /opt/rstudio-drivers \
 && wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh \
 && chmod +x odbc-install.sh \
-&& ./odbc-install.sh
+&& ./odbc-install.sh --eula
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
