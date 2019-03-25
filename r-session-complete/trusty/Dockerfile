@@ -40,7 +40,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install RStudio Professional Drivers
 RUN apt-get update -y && apt-get install -y unixodbc unixodbc-dev
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+# RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers \
 && cd /opt/rstudio-drivers \
 && wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh \

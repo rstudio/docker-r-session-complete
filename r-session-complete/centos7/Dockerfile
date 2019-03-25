@@ -42,7 +42,7 @@ ARG PRO_DRIVERS_VERSION=7C152C12
 
 # Install RStudio Professional Drivers
 RUN yum update -y && yum install -y unixODBC unixODBC-devel
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+# RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers \
 && cd /opt/rstudio-drivers \
 && wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh \
