@@ -1,56 +1,54 @@
 FROM rstudio/r-session-base:centos7-1.2.1330-2
 
-# Install R and R packages -----------------------------------------------------
-
 ARG R_VERSION=3.5.3
 ARG PRO_DRIVERS_VERSION=7C152C12
 
-# # Install required packages
-# RUN yum update -y && yum install -y \
-# libxml2-devel \
-# git subversion which
-#
-# # Install build dependencies
-# RUN set -x && yum install -y epel-release make gcc gcc-c++
-#
-# # Install R dependencies
-# RUN set -x \
-# && yum update -y \
-# && yum install -y yum-utils \
-# && yum-builddep -y R
-#
-# # Install R from source
-# RUN cd /opt && mkdir R && cd R \
-# && wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
-# && tar zxvf R-${R_VERSION}.tar.gz \
-# && cd R-${R_VERSION}  \
-# && ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
-# --enable-R-shlib --with-blas --with-lapack \
-# && make \
-# && make install \
-# && rm -rf /opt/R/R-${R_VERSION}.tar.gz \
-# && rm -rf /opt/R/R-${R_VERSION}
-#
-# # Install R packages
-# RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' \
-# && /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' \
-# && /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' \
-# && /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
-#
-# # Include R in PATH
-# ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
+# Install required packages
+RUN yum update -y && yum install -y \
+libxml2-devel \
+git subversion which
+
+# Install build dependencies
+RUN set -x && yum install -y epel-release make gcc gcc-c++
+
+# Install R dependencies
+RUN set -x \
+&& yum update -y \
+&& yum install -y yum-utils \
+&& yum-builddep -y R
+
+# Install R from source
+RUN cd /opt && mkdir R && cd R \
+&& wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
+&& tar zxvf R-${R_VERSION}.tar.gz \
+&& cd R-${R_VERSION}  \
+&& ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
+--enable-R-shlib --with-blas --with-lapack \
+&& make \
+&& make install \
+&& rm -rf /opt/R/R-${R_VERSION}.tar.gz \
+&& rm -rf /opt/R/R-${R_VERSION}
+
+# Install R packages
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' \
+&& /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' \
+&& /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' \
+&& /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
+
+# Include R in PATH
+ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers
 RUN yum update -y && yum install -y unixODBC unixODBC-devel
-# RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers \
 && cd /opt/rstudio-drivers \
 && wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh \
 && chmod +x odbc-install.sh \
 && ./odbc-install.sh --eula
 
-# # Set the locale
-# RUN localedef -i en_US -f UTF-8 en_US.UTF-8
-# ENV LANG en_US.UTF-8
-# ENV LANGUAGE en_US:en
-# ENV LC_ALL en_US.UTF-8
+# Set the locale
+RUN localedef -i en_US -f UTF-8 en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
