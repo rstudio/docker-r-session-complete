@@ -7,8 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install required packages
 RUN apt-get update -y && apt-get install -y \
-# wget gdebi rrdtool libuser libuser1-dev \
-# libssl1.0.0 libssl-dev libcurl4-gnutls-dev libxml2-dev \
+libuser libssl1.0.0 libxml2-dev \
 git subversion locales
 
 # Install R dependencies

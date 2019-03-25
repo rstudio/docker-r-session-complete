@@ -6,9 +6,7 @@ ARG R_VERSION=3.5.2
 
 # Install required packages
 RUN yum update -y && yum install -y \
-# wget rrdtool libuser-dev \
-# openssl-devel libcurl-devel libxml2-devel \
-git subversion which
+git subversion which libxml2-devel
 
 # Install build dependencies
 RUN set -x && yum install -y epel-release make gcc gcc-c++
