@@ -4,18 +4,35 @@ ARG R_VERSION=3.5.3
 ARG OS_IDENTIFIER=centos-7
 ARG PRO_DRIVERS_VERSION=7C152C12
 
-# Install required packages
+# Install system dependencies
 RUN yum update -y && \
+    yum -y install epel-release && \
     yum -y groupinstall "Development tools" && \
     yum install -y \
-    git \
-    make \
+    gcc \
     libcurl-devel \
+    libicu \
+    make \
+    pcre2 \
+    perl-Digest-MD5 \
+    sudo \
+    tcl \
+    tk \
+    tre \
+    vim \
+    wget && \
+    yum clean all
+
+# Install additional dependencies
+RUN yum update -y && \
+    yum install -y \
+    git \
     libxml2-devel \
     openssl-devel \
     pandoc \
     subversion \
-    which
+    which && \
+    yum clean all
 
 # Install R
 RUN mkdir -p /opt/R && cd /opt/R && \
@@ -34,7 +51,7 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
 ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers
-RUN yum update -y && yum install -y unixODBC unixODBC-devel
+RUN yum update -y && yum install -y unixODBC unixODBC-devel && yum clean all
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \

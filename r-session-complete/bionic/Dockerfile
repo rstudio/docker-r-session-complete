@@ -3,14 +3,32 @@ FROM rstudio/r-session-base:bionic-1.2.1320-1
 ARG R_VERSION=3.5.3
 ARG OS_IDENTIFIER=ubuntu-1804
 ARG PRO_DRIVERS_VERSION=7C152C12
-ARG DEBIAN_FRONTEND=noninteractive
 
-# Install required packages
-RUN apt-get update -y && \
-    apt-get install -y \
-    git \
-    make \
+# Install system dependencies
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-transport-https \
+    build-essential \
+    curl \
+    gfortran \
+    libatlas-base-dev \
+    libbz2-dev \
     libcurl4-openssl-dev \
+    libicu-dev \
+    liblzma-dev \
+    libpcre3-dev \
+    locales \
+    sudo \
+    libtcl8.6 \
+    libtk8.6 \
+    tzdata \
+    wget \
+    zlib1g-dev
+
+# Install additional dependencies
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    git \
     libssl-dev \
     libssl1.0.0 \
     libuser \
@@ -36,7 +54,8 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
 ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers
-RUN apt-get update -y && apt-get install -y unixodbc unixodbc-dev
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
