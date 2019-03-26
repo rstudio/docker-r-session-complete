@@ -12,16 +12,10 @@ env:
     - DISTRO=centos7
     - DISTRO=trusty
 
-script:
-  - cd r-session-complete/${DISTRO}
-  - docker build . -t r-session-complete
-  - docker images
+script: scripts/docker-build.sh
 
 deploy:
   provider: script
-  script: set -e && set -x \
-          && docker tag r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}\
-          && echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin\
-          && docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
+  script: scripts/docker-tag-and-push.sh
   on:
     tags: true
