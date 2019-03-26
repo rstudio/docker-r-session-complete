@@ -50,7 +50,8 @@ steps:
 export VERSION=1.2.1330-2-r-3.5.3
 git commit --allow-empty -m "Release for image version ${VERSION}"
 git tag -a ${VERSION} -m "${VERSION}"
-git push --follow-tags
+git push origin ${VERSION}
+git push
 ```
 
 3. The new images will get built on Travis CI and get pushed to Docker Hub
