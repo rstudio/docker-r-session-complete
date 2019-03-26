@@ -14,12 +14,13 @@ env:
 
 script:
   - cd r-session-complete/${DISTRO}
-  - docker build . -t rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
+  - docker build . -t r-session-complete
   - docker images
 
 deploy:
   provider: script
-  script: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin \
+  script: docker tag r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG} \
+          && echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin \
           && docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
   on:
     tags: true
