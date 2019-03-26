@@ -26,24 +26,6 @@ RUN mkdir -p /opt/R && cd /opt/R && \
     tar zx -C /opt/R -f ./R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz && \
     rm R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz
 
-# Install R dependencies
-# RUN set -x \
-# && sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list \
-# && apt-get update -y \
-# && apt-get build-dep -y r-base
-
-# Install R from source
-# RUN cd /opt && mkdir R && cd R \
-# && wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
-# && tar zxvf R-${R_VERSION}.tar.gz \
-# && cd R-${R_VERSION}  \
-# && ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
-# --enable-R-shlib --with-blas --with-lapack \
-# && make \
-# && make install \
-# && rm -rf /opt/R/R-${R_VERSION}.tar.gz \
-# && rm -rf /opt/R/R-${R_VERSION}
-
 # Install R packages
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' && \

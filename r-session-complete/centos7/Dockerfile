@@ -24,27 +24,6 @@ RUN mkdir -p /opt/R && cd /opt/R && \
     tar zx -C /opt/R -f ./R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz && \
     rm R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz
 
-# Install build dependencies
-# RUN set -x && yum install -y epel-release make gcc gcc-c++
-
-# Install R dependencies
-# RUN set -x \
-# && yum update -y \
-# && yum install -y yum-utils \
-# && yum-builddep -y R
-
-# Install R from source
-# RUN cd /opt && mkdir R && cd R \
-# && wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
-# && tar zxvf R-${R_VERSION}.tar.gz \
-# && cd R-${R_VERSION}  \
-# && ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
-# --enable-R-shlib --with-blas --with-lapack \
-# && make \
-# && make install \
-# && rm -rf /opt/R/R-${R_VERSION}.tar.gz \
-# && rm -rf /opt/R/R-${R_VERSION}
-
 # Install R packages
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' && \
