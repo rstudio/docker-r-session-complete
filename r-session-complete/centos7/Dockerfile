@@ -31,7 +31,7 @@ RUN cd /opt && mkdir R && cd R \
 # && tar zxvf R-${R_VERSION}.tar.gz \
 # && cd R-${R_VERSION}  \
 # && ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
---enable-R-shlib --with-blas --with-lapack \
+# --enable-R-shlib --with-blas --with-lapack \
 # && make \
 # && make install \
 # && rm -rf /opt/R/R-${R_VERSION}.tar.gz \
