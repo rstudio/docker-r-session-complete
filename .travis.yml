@@ -20,8 +20,8 @@ script:
 deploy:
   provider: script
   script: set -e && set -x \
-          && docker tag r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG} \
-          && echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin \
+          && docker tag r-session-complete rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}\
+          && echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin\
           && docker push rstudio/r-session-complete:${DISTRO}-${TRAVIS_TAG}
   on:
     tags: true
