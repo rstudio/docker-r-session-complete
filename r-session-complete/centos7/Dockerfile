@@ -1,33 +1,44 @@
-FROM rstudio/r-session-base:centos7-1.2.1330-2
+FROM rstudio/r-session-base:centos7-1.2.1320-1
 
 ARG R_VERSION=3.5.3
+ARG OS_IDENTIFIER=centos-7
 ARG PRO_DRIVERS_VERSION=7C152C12
 
 # Install required packages
 RUN yum update -y && yum install -y \
-libxml2-devel \
-git subversion which
+make libcurl-devel openssl-devel libxml2-devel pandoc \
+git subversion which pandoc
+
+# Install R
+RUN cd /opt && mkdir R && cd R \
+&& wget https://cdn.rstudio.com/r/${OS_IDENTIFIER}/R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz \
+&& mkdir -p /opt/R \
+&& tar zx -C /opt/R -f ./R-${R_VERSION}.tar.gz \
+&& ln -s /opt/R/${R_VERSION}/bin/R /usr/bin/R \
+&& ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/bin/Rscript \
+&& ln -s /opt/R/${R_VERSION}/lib/R /usr/lib/R \
+&& rm R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz
 
 # Install build dependencies
-RUN set -x && yum install -y epel-release make gcc gcc-c++
+# RUN set -x && yum install -y epel-release make gcc gcc-c++
 
 # Install R dependencies
-RUN set -x \
-&& yum update -y \
-&& yum install -y yum-utils \
-&& yum-builddep -y R
+# RUN set -x \
+# && yum update -y \
+# && yum install -y yum-utils \
+# && yum-builddep -y R
 
 # Install R from source
-RUN cd /opt && mkdir R && cd R \
-&& wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
-&& tar zxvf R-${R_VERSION}.tar.gz \
-&& cd R-${R_VERSION}  \
-&& ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
+# RUN cd /opt && mkdir R && cd R \
+# && wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
+# && tar zxvf R-${R_VERSION}.tar.gz \
+# && cd R-${R_VERSION}  \
+# && ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling \
 --enable-R-shlib --with-blas --with-lapack \
-&& make \
-&& make install \
-&& rm -rf /opt/R/R-${R_VERSION}.tar.gz \
-&& rm -rf /opt/R/R-${R_VERSION}
+# && make \
+# && make install \
+# && rm -rf /opt/R/R-${R_VERSION}.tar.gz \
+# && rm -rf /opt/R/R-${R_VERSION}
 
 # Install R packages
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' \
@@ -36,7 +47,7 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
 && /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
 
 # Include R in PATH
-ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
+# ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers
 RUN yum update -y && yum install -y unixODBC unixODBC-devel
