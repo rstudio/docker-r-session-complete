@@ -38,7 +38,8 @@ RUN apt-get update -y && \
     subversion
 
 # Install R
-RUN mkdir -p /opt/R && cd /opt/R && \
+RUN mkdir -p /opt/R && \
+    cd /opt/R && \
     wget https://cdn.rstudio.com/r/${OS_IDENTIFIER}/R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz && \
     mkdir -p /opt/R && \
     tar zx -C /opt/R -f ./R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz && \
@@ -60,8 +61,7 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
     wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh && \
-    chmod +x odbc-install.sh && \
-    ./odbc-install.sh --eula
+    bash odbc-install.sh --eula
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
