@@ -10,10 +10,10 @@ make libcurl-devel openssl-devel libxml2-devel pandoc \
 git subversion which pandoc
 
 # Install R
-RUN cd /opt && mkdir R && cd R \
+RUN mkdir -p /opt/R && cd /opt/R \
 && wget https://cdn.rstudio.com/r/${OS_IDENTIFIER}/R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz \
 && mkdir -p /opt/R \
-&& tar zx -C /opt/R -f ./R-${R_VERSION}.tar.gz \
+&& tar zx -C /opt/R -f ./R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz \
 && rm R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz
 
 # Install build dependencies
