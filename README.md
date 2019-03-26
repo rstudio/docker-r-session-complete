@@ -7,17 +7,20 @@ Kubernetes.
 The Docker images built from these Dockerfiles are intended to be used for R
 sessions and jobs with RStudio Server Pro, Launcher, and Kubernetes.
 
-For more information about RStudio Server Pro and Launcher, refer to the RStudio
-Solutions website at: https://solutions.rstudio.com/launcher/overview/.
+For more information about RStudio Server Pro and Launcher, refer to the
+[Launcher Overview](https://solutions.rstudio.com/launcher/overview/) on the
+RStudio Solutions website.
 
 For more information about how to use these images with RStudio Server Pro and
-Launcher, refer to the RStudio support article at:
-https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes.
+Launcher, refer to the RStudio support article on [Using Docker images with
+RStudio Server Pro, Launcher, and
+Kubernetes](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes).
 
 ## Docker Images on Docker Hub
 
-Built images are available at
-https://hub.docker.com/r/rstudio/r-session-complete.
+Built images are available from the
+[rstudio/r-session-complete](https://hub.docker.com/r/rstudio/r-session-complete)
+repository on Docker Hub.
 
 ## Docker Image Layers
 
