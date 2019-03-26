@@ -1,38 +1,41 @@
-FROM rstudio/r-session-base:centos7-1.2.1320-1
+FROM rstudio/r-session-base:bionic-1.2.1320-1
 
 ARG R_VERSION=3.5.3
-ARG PLATFORM=centos-7
+ARG PLATFORM=ubuntu-1804
 ARG PRO_DRIVERS_VERSION=7C152C12
 
 # Install system dependencies
-RUN yum update -y && \
-    yum -y install epel-release && \
-    yum -y groupinstall "Development tools" && \
-    yum install -y \
-    gcc \
-    libcurl-devel \
-    libicu \
-    make \
-    pcre2 \
-    perl-Digest-MD5 \
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-transport-https \
+    build-essential \
+    curl \
+    gfortran \
+    libatlas-base-dev \
+    libbz2-dev \
+    libcurl4-openssl-dev \
+    libicu-dev \
+    liblzma-dev \
+    libpcre3-dev \
+    locales \
     sudo \
-    tcl \
-    tk \
-    tre \
-    vim \
-    wget && \
-    yum clean all
+    libtcl8.6 \
+    libtk8.6 \
+    tzdata \
+    wget \
+    zlib1g-dev
 
 # Install additional dependencies
-RUN yum update -y && \
-    yum install -y \
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
     git \
-    libxml2-devel \
-    openssl-devel \
+    libssl-dev \
+    libssl1.0.0 \
+    libuser \
+    libxml2-dev \
+    locales \
     pandoc \
-    subversion \
-    which && \
-    yum clean all
+    subversion
 
 # Install R
 RUN wget https://cdn.rstudio.com/r/${PLATFORM}/R-${R_VERSION}-${PLATFORM}.tar.gz && \
@@ -50,9 +53,8 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
 ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers
-RUN yum update -y && \
-    yum install -y unixODBC unixODBC-devel && \
-    yum clean all
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
@@ -60,7 +62,7 @@ RUN mkdir -p /opt/rstudio-drivers && \
     bash odbc-install.sh --eula
 
 # Set the locale
-RUN localedef -i en_US -f UTF-8 en_US.UTF-8
+RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
