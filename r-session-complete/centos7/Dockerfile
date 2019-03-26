@@ -35,8 +35,8 @@ RUN yum update -y && \
     yum clean all
 
 # Install R
-RUN mkdir -p /opt/R && \
-    wget https://cdn.rstudio.com/r/${PLATFORM}/R-${R_VERSION}-${PLATFORM}.tar.gz && \
+RUN wget https://cdn.rstudio.com/r/${PLATFORM}/R-${R_VERSION}-${PLATFORM}.tar.gz && \
+    mkdir -p /opt/R && \
     tar zx -C /opt/R -f ./R-${R_VERSION}-${PLATFORM}.tar.gz && \
     rm R-${R_VERSION}-${PLATFORM}.tar.gz
 
