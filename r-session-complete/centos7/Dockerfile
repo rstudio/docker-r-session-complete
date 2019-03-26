@@ -1,7 +1,7 @@
 FROM rstudio/r-session-base:centos7-1.2.1320-1
 
 ARG R_VERSION=3.5.3
-ARG OS_IDENTIFIER=centos-7
+ARG PLATFORM=centos-7
 ARG PRO_DRIVERS_VERSION=7C152C12
 
 # Install system dependencies
@@ -37,10 +37,10 @@ RUN yum update -y && \
 # Install R
 RUN mkdir -p /opt/R && \
     cd /opt/R && \
-    wget https://cdn.rstudio.com/r/${OS_IDENTIFIER}/R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz && \
+    wget https://cdn.rstudio.com/r/${PLATFORM}/R-${R_VERSION}-${PLATFORM}.tar.gz && \
     mkdir -p /opt/R && \
-    tar zx -C /opt/R -f ./R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz && \
-    rm R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz
+    tar zx -C /opt/R -f ./R-${R_VERSION}-${PLATFORM}.tar.gz && \
+    rm R-${R_VERSION}-${PLATFORM}.tar.gz
 
 # Install R packages
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' && \
