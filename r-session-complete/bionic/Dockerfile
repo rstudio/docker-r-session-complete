@@ -1,4 +1,4 @@
-FROM rstudio/r-session-base:bionic-1.2.1320-1
+FROM rstudio/r-session-base:bionic-1.2.1330-2
 
 ARG R_VERSION=3.5.3
 ARG PLATFORM=ubuntu-1804
