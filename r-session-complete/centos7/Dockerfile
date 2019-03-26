@@ -14,9 +14,6 @@ RUN cd /opt && mkdir R && cd R \
 && wget https://cdn.rstudio.com/r/${OS_IDENTIFIER}/R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz \
 && mkdir -p /opt/R \
 && tar zx -C /opt/R -f ./R-${R_VERSION}.tar.gz \
-&& ln -s /opt/R/${R_VERSION}/bin/R /usr/bin/R \
-&& ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/bin/Rscript \
-&& ln -s /opt/R/${R_VERSION}/lib/R /usr/lib/R \
 && rm R-${R_VERSION}-${OS_IDENTIFIER}.tar.gz
 
 # Install build dependencies
@@ -47,7 +44,7 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
 && /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
 
 # Include R in PATH
-# ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
+ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers
 RUN yum update -y && yum install -y unixODBC unixODBC-devel
