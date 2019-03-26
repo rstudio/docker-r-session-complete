@@ -24,7 +24,7 @@ repository on Docker Hub.
 
 ## Docker Image Layers
 
-These images includes the following layers:
+These images include the following layers:
 
 * Base image from `rstudio/r-session-base` that includes OS and R session
   components
