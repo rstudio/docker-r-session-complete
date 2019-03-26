@@ -1,6 +1,9 @@
 dist: trusty
 language: generic
 
+notifications:
+  email: false
+
 env:
   global:
     - DOCKER_USERNAME=koverholt
