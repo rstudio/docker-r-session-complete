@@ -1,7 +1,5 @@
 FROM rstudio/r-session-base:centos7-1.2.1330-2
 
-# Install R and R packages -----------------------------------------------------
-
 ARG R_VERSION=3.5.3
 ARG PRO_DRIVERS_VERSION=7C152C12
 
