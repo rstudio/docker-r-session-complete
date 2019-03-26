@@ -2,12 +2,24 @@
 Dockerfiles for R sessions and jobs to be used RStudio Server Pro, Launcher, and
 Kubernetes.
 
-## Built Images
+## Docker Images on Docker Hub
 
 Built images are available at
 https://hub.docker.com/r/rstudio/r-session-complete.
 
-## Release Process
+## Docker Image Layers
+
+These images includes the following layers:
+
+* Base image from `rstudio/r-session-base` that includes OS and R session
+  components
+* Some system packages required for R, R packages, and RStudio Professional
+  Drivers
+* A recent version of R
+* R packages (devtools, tidyverse, shiny, and rmarkdown)
+* RStudio Professional Drivers
+
+## Release Process for Docker Images
 
 All changes should be made in a PR and merged when the build passes.
 
