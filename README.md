@@ -2,6 +2,18 @@
 Dockerfiles for R sessions and jobs to be used RStudio Server Pro, Launcher, and
 Kubernetes.
 
+## How to Use These Docker Images
+
+The Docker images built from these Dockerfiles are intended to be used for R
+sessions and jobs with RStudio Server Pro, Launcher, and Kubernetes.
+
+For more information about RStudio Server Pro and Launcher, refer to the RStudio
+Solutions website at: https://solutions.rstudio.com/launcher/overview/.
+
+For more information about how to use these images with RStudio Server Pro and
+Launcher, refer to the RStudio support article at:
+https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes.
+
 ## Docker Images on Docker Hub
 
 Built images are available at
