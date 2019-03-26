@@ -12,10 +12,10 @@ env:
     - DISTRO=centos7
     - DISTRO=trusty
 
-script: scripts/docker-build.sh
+script: bash scripts/docker-build.sh
 
 deploy:
   provider: script
-  script: scripts/docker-tag-and-push.sh
+  script: bash scripts/docker-tag-and-push.sh
   on:
     tags: true
