@@ -10,14 +10,14 @@ ARG PRO_DRIVERS_VERSION=7C152C12
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-   wget \
-   gdebi \
-   rrdtool \
-   libuser \
-   libuser1-dev \
-   libssl1.0.0 \
-   libssl-dev \
-   libcurl4-gnutls-dev
+    wget \
+    gdebi \
+    rrdtool \
+    libuser \
+    libuser1-dev \
+    libssl1.0.0 \
+    libssl-dev \
+    libcurl4-gnutls-dev
 
 RUN wget https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \
