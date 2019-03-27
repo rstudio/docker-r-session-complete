@@ -1,44 +1,34 @@
-FROM rstudio/r-session-base:centos7-1.2.1330-2
+FROM rstudio/r-session-base:centos7-1.2.1320-1
 
 ARG R_VERSION=3.5.3
-ARG PLATFORM=centos-7
 ARG PRO_DRIVERS_VERSION=7C152C12
 
-# Install system dependencies
+# Install build dependencies
 RUN yum update -y && \
-    yum -y install epel-release && \
-    yum -y groupinstall "Development tools" && \
-    yum install -y \
-    gcc \
-    libcurl-devel \
-    libicu \
-    make \
-    pcre2 \
-    perl-Digest-MD5 \
-    sudo \
-    tcl \
-    tk \
-    tre \
-    vim \
-    wget && \
-    yum clean all
+    yum install -y epel-release make gcc gcc-c++ && \
+    yum install -y yum-utils && \
+    yum-builddep -y R
 
 # Install additional dependencies
 RUN yum update -y && \
-    yum install -y \
-    git \
-    libxml2-devel \
-    openssl-devel \
-    pandoc \
-    subversion \
+    yum install -y
+    git
+    libxml2-devel
+    subversion
     which && \
     yum clean all
 
-# Install R
-RUN wget https://cdn.rstudio.com/r/${PLATFORM}/R-${R_VERSION}-${PLATFORM}.tar.gz && \
-    mkdir -p /opt/R && \
-    tar zx -C /opt/R -f ./R-${R_VERSION}-${PLATFORM}.tar.gz && \
-    rm R-${R_VERSION}-${PLATFORM}.tar.gz
+# Install R from source
+RUN mkdir -p /opt/R && \
+    cd R && \
+    wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz && \
+    tar zxvf R-${R_VERSION}.tar.gz && \
+    cd R-${R_VERSION}  && \
+    ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling && --enable-R-shlib --with-blas --with-lapack && \
+    make && \
+    make install && \
+    rm -rf /opt/R/R-${R_VERSION}.tar.gz && \
+    rm -rf /opt/R/R-${R_VERSION}
 
 # Install R packages
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' && \
@@ -53,11 +43,11 @@ ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 RUN yum update -y && \
     yum install -y unixODBC unixODBC-devel && \
     yum clean all
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
     wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh && \
     bash odbc-install.sh --eula
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
 
 # Set the locale
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8
