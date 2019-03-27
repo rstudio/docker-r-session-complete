@@ -11,10 +11,10 @@ RUN yum update -y && \
 
 # Install additional dependencies
 RUN yum update -y && \
-    yum install -y
-    git
-    libxml2-devel
-    subversion
+    yum install -y \
+    git \
+    libxml2-devel \
+    subversion \
     which && \
     yum clean all
 
@@ -24,7 +24,7 @@ RUN mkdir -p /opt/R && \
     wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz && \
     tar zxvf R-${R_VERSION}.tar.gz && \
     cd R-${R_VERSION}  && \
-    ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling && --enable-R-shlib --with-blas --with-lapack && \
+    ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling --enable-R-shlib --with-blas --with-lapack && \
     make && \
     make install && \
     rm -rf /opt/R/R-${R_VERSION}.tar.gz && \
