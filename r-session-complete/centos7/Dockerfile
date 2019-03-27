@@ -20,7 +20,7 @@ RUN yum update -y && \
 
 # Install R from source
 RUN mkdir -p /opt/R && \
-    cd R && \
+    cd /opt/R && \
     wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz && \
     tar zxvf R-${R_VERSION}.tar.gz && \
     cd R-${R_VERSION}  && \
