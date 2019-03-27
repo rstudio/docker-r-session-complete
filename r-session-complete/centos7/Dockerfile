@@ -7,7 +7,8 @@ ARG PRO_DRIVERS_VERSION=7C152C12
 RUN yum update -y && \
     yum install -y epel-release make gcc gcc-c++ && \
     yum install -y yum-utils && \
-    yum-builddep -y R
+    yum-builddep -y R && \
+    yum clean all
 
 # Install additional dependencies
 RUN yum update -y && \
@@ -36,9 +37,6 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
 
-# Include R in PATH
-ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
-
 # Install RStudio Professional Drivers
 RUN yum update -y && \
     yum install -y unixODBC unixODBC-devel && \
@@ -46,8 +44,12 @@ RUN yum update -y && \
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
     wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh && \
-    bash odbc-install.sh --eula
+    bash odbc-install.sh --eula && \
+    rm odbc-install.sh
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+
+# Include R in PATH
+ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Set the locale
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8

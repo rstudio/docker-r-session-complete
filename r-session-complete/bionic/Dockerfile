@@ -36,17 +36,18 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cra
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
 
-# Include R in PATH
-ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
-
 # Install RStudio Professional Drivers
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
     wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh && \
-    bash odbc-install.sh --eula
+    bash odbc-install.sh --eula && \
+    rm odbc-install.sh
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+
+# Include R in PATH
+ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
