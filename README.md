@@ -26,8 +26,8 @@ repository on Docker Hub.
 
 These images include the following layers:
 
-* Base image from `rstudio/r-session-base` that includes OS and R session
-  components
+* Base OS
+* RSP session components
 * Some system packages required for R, R packages, and RStudio Professional
   Drivers
 * A recent version of R
@@ -42,7 +42,7 @@ When builds on master are passing and you are ready to release a new version of
 the image on Docker Hub, you can tag a release on master using the following
 steps:
 
-1. Bump versions of base Docker images in Dockerfiles
+1. Bump versions of RSP session components in Dockerfiles
 2. Run the following commands on the `master` branch, editing the version string
    as needed:
 
