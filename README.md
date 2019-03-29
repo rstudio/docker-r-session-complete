@@ -47,7 +47,7 @@ steps:
    as needed:
 
 ```
-export VERSION=1.2.1330-2-r-3.5.3
+export VERSION=1.2.1335-1-r-3.5.3
 git commit --allow-empty -m "Release for image version ${VERSION}"
 git tag -a ${VERSION} -m "${VERSION}"
 git push origin ${VERSION}
