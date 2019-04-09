@@ -1,5 +1,7 @@
 FROM ubuntu:bionic
 
+LABEL maintainer="sol-eng@rstudio.com"
+
 # Set versions and platforms
 ARG RSP_PLATFORM=trusty
 ARG RSP_VERSION=1.2.1335-1
@@ -10,14 +12,14 @@ ARG PRO_DRIVERS_VERSION=7C152C12
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    wget \
     gdebi \
-    rrdtool \
-    libuser \
-    libuser1-dev \
+    libcurl4-gnutls-dev \
     libssl1.0.0 \
     libssl-dev \
-    libcurl4-gnutls-dev
+    libuser \
+    libuser1-dev \
+    rrdtool \
+    wget
 
 RUN wget https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \
@@ -46,7 +48,7 @@ RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
 
 RUN mkdir -p /opt/R && \
     cd /opt/R && \
-    wget https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz && \
+    wget https://cran.rstudio.com/src/base/R-3/R-${R_VERSION}.tar.gz && \
     tar zxvf R-${R_VERSION}.tar.gz && \
     cd R-${R_VERSION}  && \
     ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling --enable-R-shlib --with-blas --with-lapack && \
@@ -59,10 +61,10 @@ ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
 # Install R packages ----------------------------------------------------------#
 
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="http://cran.us.r-project.org")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="http://cran.us.r-project.org")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="http://cran.us.r-project.org")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="http://cran.us.r-project.org")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://cran.rstudio.com")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://cran.rstudio.com")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://cran.rstudio.com")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://cran.rstudio.com")'
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
