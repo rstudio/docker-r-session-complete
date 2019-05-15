@@ -4,8 +4,10 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=centos6
-ARG RSP_VERSION=1.2.1335-1
+ARG RSP_VERSION=1.2.1511-1
 ARG R_VERSION=3.5.3
+ARG PYTHON_VERSION=3.6.8
+ARG PYTHON_MAJOR_VERSION=3
 ARG PRO_DRIVERS_VERSION=7C152C12
 
 # Install RStudio Server Pro session components -------------------------------#
@@ -50,8 +52,8 @@ RUN yum update -y && \
 RUN mkdir -p /opt/R && \
     cd /opt/R && \
     wget https://cran.rstudio.com/src/base/R-3/R-${R_VERSION}.tar.gz && \
-    tar zxvf R-${R_VERSION}.tar.gz && \
-    cd R-${R_VERSION}  && \
+    tar -zxvf R-${R_VERSION}.tar.gz && \
+    cd R-${R_VERSION} && \
     ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling --enable-R-shlib --with-blas --with-lapack && \
     make && \
     make install && \
@@ -66,6 +68,39 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://cr
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://cran.rstudio.com")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://cran.rstudio.com")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://cran.rstudio.com")'
+
+# Install Python --------------------------------------------------------------#
+
+RUN yum update -y && \
+    yum install -y epel-release make gcc gcc-c++ && \
+    yum install -y yum-utils && \
+    yum-builddep -y python python-libs && \
+    yum clean all
+
+RUN yum update -y && \
+    yum install -y \
+    libffi-devel \
+    zlib \
+    zlib-devel && \
+    yum clean all
+
+RUN mkdir -p /opt/Python && \
+    cd /opt/Python && \
+    wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
+    tar -xzvf Python-${PYTHON_VERSION}.tgz && \
+    cd Python-${PYTHON_VERSION} && \
+    ./configure --prefix=/opt/Python/${PYTHON_VERSION} --enable-shared --enable-ipv6 LDFLAGS=-Wl,-rpath=/opt/Python/${PYTHON_VERSION}/lib,--disable-new-dtags && \
+    make && \
+    make install && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    sudo /opt/Python/${PYTHON_VERSION}/bin/python${PYTHON_MAJOR_VERSION} get-pip.py && \
+    sudo /opt/Python/${PYTHON_VERSION}/bin/pip install virtualenv && \
+    rm -rf /opt/R/R-${PYTHON_VERSION}.tar.gz && \
+    rm -rf /opt/R/R-${PYTHON_VERSION}
+
+ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
+
+# Install Jupyter Notebook ----------------------------------------------------#
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
