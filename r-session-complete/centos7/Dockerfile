@@ -95,8 +95,8 @@ RUN mkdir -p /opt/Python && \
     wget https://bootstrap.pypa.io/get-pip.py && \
     sudo /opt/Python/${PYTHON_VERSION}/bin/python${PYTHON_MAJOR_VERSION} get-pip.py && \
     sudo /opt/Python/${PYTHON_VERSION}/bin/pip install virtualenv && \
-    rm -rf /opt/R/R-${PYTHON_VERSION}.tar.gz && \
-    rm -rf /opt/R/R-${PYTHON_VERSION}
+    rm -rf /opt/Python/Python-${PYTHON_VERSION}.tar.gz && \
+    rm -rf /opt/Python/Python-${PYTHON_VERSION}
 
 ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
 
