@@ -102,8 +102,13 @@ ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install Jupyter Notebook and RSP/RSC Notebook Extensions --------------------#
 
-RUN /opt/Python/${PYTHON_VERSION}/bin/pip install jupyter jupyterlab rsp_jupyter rsconnect_jupyter && \
-    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
+RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
+    jupyter \
+    jupyterlab \
+    rsp_jupyter \
+    rsconnect_jupyter
+
+RUN /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
     /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
     /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
     /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
@@ -112,8 +117,25 @@ RUN /opt/Python/${PYTHON_VERSION}/bin/pip install jupyter jupyterlab rsp_jupyter
 # Install Python packages -----------------------------------------------------#
 
 RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
+    beautifulsoup4 \
+    cloudpickle \
+    cython \
+    dask \
+    hdf5 \
+    keras \
+    matplotlib \
     numpy \
-    pandas
+    pandas \
+    pillow \
+    pyarrow \
+    pyspark \
+    requests \
+    scipy \
+    scikit-image \
+    scikit-learn \
+    sqlalchemy \
+    statsmodels \
+    tensorflow
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
