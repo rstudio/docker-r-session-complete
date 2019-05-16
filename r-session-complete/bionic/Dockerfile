@@ -100,9 +100,12 @@ ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install Jupyter Notebook and RSP Notebook Extension -------------------------#
 
-RUN /opt/Python/${PYTHON_VERSION}/bin/pip install jupyter rsp_jupyter && \
+RUN /opt/Python/${PYTHON_VERSION}/bin/pip install jupyter rsp_jupyter rsconnect_jupyter && \
     /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
-    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter
+    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
+    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
+    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
+    /opt/Python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
 
 # Install Python packages -----------------------------------------------------#
 
