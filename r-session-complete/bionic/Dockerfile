@@ -76,10 +76,10 @@ RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    libffi-dev && \
-    libgdbm-dev && \
-    libsqlite3-dev && \
-    libssl-dev && \
+    libffi-dev \
+    libgdbm-dev \
+    libsqlite3-dev \
+    libssl-dev \
     zlib1g-dev
 
 RUN mkdir -p /opt/Python && \
@@ -101,13 +101,13 @@ ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
 # Install Jupyter Notebook and RSP Notebook Extension -------------------------#
 
 RUN /opt/Python/${PYTHON_VERSION}/bin/pip install jupyter rsp_jupyter && \
-    jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
-    jupyter-nbextension enable --sys-prefix --py rsp_jupyter
+    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
+    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter
 
 # Install Python packages -----------------------------------------------------#
 
-RUN /opt/Python/${PYTHON_VERSION}/bin/pip install && \
-    numpy && \
+RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
+    numpy \
     pandas
 
 # Install RStudio Professional Drivers ----------------------------------------#
