@@ -98,7 +98,7 @@ RUN mkdir -p /opt/Python && \
 
 ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
 
-# Install Jupyter Notebook and RSP Notebook Extension -------------------------#
+# Install Jupyter Notebook and RSP/RSC Notebook Extensions --------------------#
 
 RUN /opt/Python/${PYTHON_VERSION}/bin/pip install jupyter rsp_jupyter rsconnect_jupyter && \
     /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
