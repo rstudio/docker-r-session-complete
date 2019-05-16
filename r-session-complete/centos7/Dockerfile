@@ -117,13 +117,16 @@ RUN /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
 # Install Python packages -----------------------------------------------------#
 
 RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
+    altair \
     beautifulsoup4 \
     cloudpickle \
     cython \
     dask \
+    gensim \
     hdf5 \
     keras \
     matplotlib \
+    nltk \
     numpy \
     pandas \
     pillow \
@@ -133,9 +136,15 @@ RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
     scipy \
     scikit-image \
     scikit-learn \
+    scrapy \
+    seaborn \
+    spacy \
     sqlalchemy \
     statsmodels \
-    tensorflow
+    tensorflow \
+    torch \
+    torchvision \
+    xgboost
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
