@@ -121,7 +121,6 @@ RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
     cython \
     dask \
     gensim \
-    hdf5 \
     keras \
     matplotlib \
     nltk \
