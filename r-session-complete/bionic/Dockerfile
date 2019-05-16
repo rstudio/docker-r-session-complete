@@ -128,7 +128,6 @@ RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
     pandas \
     pillow \
     pyarrow \
-    pyspark \
     requests \
     scipy \
     scikit-image \
@@ -139,8 +138,6 @@ RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
     sqlalchemy \
     statsmodels \
     tensorflow \
-    torch \
-    torchvision \
     xgboost
 
 # Install RStudio Professional Drivers ----------------------------------------#
