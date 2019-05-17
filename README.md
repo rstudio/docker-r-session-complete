@@ -1,11 +1,11 @@
 # docker-r-session
-Dockerfiles for R sessions and jobs to be used RStudio Server Pro, Launcher, and
-Kubernetes.
+Dockerfiles for R and Python sessions and jobs to be used RStudio Server Pro,
+Launcher, and Kubernetes.
 
 ## How to Use These Docker Images
 
-The Docker images built from these Dockerfiles are intended to be used for R
-sessions and jobs with RStudio Server Pro, Launcher, and Kubernetes.
+The Docker images built from these Dockerfiles are intended to be used for R and
+Python sessions and jobs with RStudio Server Pro, Launcher, and Kubernetes.
 
 For more information about RStudio Server Pro and Launcher, refer to the
 [Launcher Overview](https://solutions.rstudio.com/launcher/overview/) on the
@@ -28,10 +28,12 @@ These images include the following layers:
 
 * Base OS
 * RSP session components
-* Some system packages required for R, R packages, and RStudio Professional
-  Drivers
-* A recent version of R
+* System packages required for R, R packages, and RStudio Professional Drivers
+* One version of R
 * R packages (devtools, tidyverse, shiny, and rmarkdown)
+* One version of Python
+* Jupyter Notebooks, JupyterLab, and RSP/RSC notebook extensions
+* Python packages
 * RStudio Professional Drivers
 
 ## Release Process for Docker Images
@@ -44,10 +46,10 @@ steps:
 
 1. Bump versions of RSP session components in Dockerfiles
 2. Run the following commands on the `master` branch, editing the version string
-   as needed (where 1.2.XXX-X is the RSP version and r-3.X.X is the R version):
+   as needed (where 1.2.XXX-X is the RSP version):
 
 ```
-export VERSION=1.2.XXXX-X-r-3.X.X
+export VERSION=1.2.XXXX-X
 git commit --allow-empty -m "Release for image version ${VERSION}"
 git tag -a ${VERSION} -m "${VERSION}"
 git push origin ${VERSION}
