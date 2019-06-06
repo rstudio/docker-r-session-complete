@@ -50,7 +50,7 @@ steps:
 
 ```
 export VERSION=1.2.XXXX-X
-git commit --allow-empty -m "Release for image version ${VERSION}"
+git commit -am "Release for image version ${VERSION}"
 git tag -a ${VERSION} -m "${VERSION}"
 git push origin ${VERSION}
 git push
