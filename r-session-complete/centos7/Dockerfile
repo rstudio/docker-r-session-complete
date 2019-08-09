@@ -4,7 +4,7 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=centos6
-ARG RSP_VERSION=1.2.1564-2
+ARG RSP_VERSION=1.2.1568-3
 ARG R_VERSION=3.6.1
 ARG PYTHON_VERSION=3.6.8
 ARG PYTHON_MAJOR_VERSION=3
