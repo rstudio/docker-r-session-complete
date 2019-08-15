@@ -14,6 +14,7 @@ ARG CONDA_VERSION=4.6.14
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    curl \
     gdebi \
     libcurl4-gnutls-dev \
     libssl1.0.0 \
