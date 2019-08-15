@@ -8,7 +8,7 @@ ARG RSP_VERSION=1.2.1568-3
 ARG R_VERSION=3.6.1
 ARG PYTHON_VERSION=3.6.8
 ARG PYTHON_MAJOR_VERSION=3
-ARG PRO_DRIVERS_VERSION=7C152C12
+ARG CONDA_VERSION=4.6.14
 
 # Install RStudio Server Pro session components -------------------------------#
 
@@ -44,20 +44,34 @@ RUN apt-get update -y && \
 
 # Install R -------------------------------------------------------------------#
 
-RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
-    apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get build-dep -y r-base
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-transport-https \
+    build-essential \
+    curl \
+    gfortran \
+    libbz2-dev \
+    libcairo2 \
+    libcurl4-openssl-dev \
+    libicu-dev \
+    liblzma-dev \
+    libopenblas-dev \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libpcre3-dev \
+    libtcl8.6 \
+    libtiff5 \
+    libtk8.6 \
+    libx11-6 \
+    libxt6 \
+    locales \
+    tzdata \
+    wget \
+    zlib1g-dev
 
-RUN mkdir -p /opt/R && \
-    cd /opt/R && \
-    wget https://cran.rstudio.com/src/base/R-3/R-${R_VERSION}.tar.gz && \
-    tar zxvf R-${R_VERSION}.tar.gz && \
-    cd R-${R_VERSION}  && \
-    ./configure --prefix=/opt/R/${R_VERSION} --enable-memory-profiling --enable-R-shlib --with-blas --with-lapack && \
-    make && \
-    make install && \
-    rm -rf /opt/R/R-${R_VERSION}.tar.gz && \
-    rm -rf /opt/R/R-${R_VERSION}
+RUN curl -O R-${R_VERSION}.tar.gz https://cdn.rstudio.com/r/ubuntu-1804/R-${R_VERSION}-ubuntu-1804.tar.gz && \
+    mkdir -p /opt/R && \
+    tar -xzC /opt/R -f ./R-${R_VERSION}.tar.gz
 
 ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
@@ -70,51 +84,31 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://cr
 
 # Install Python --------------------------------------------------------------#
 
-RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
-    apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get build-dep -y python
+RUN mkdir -p /opt/python && \
+    cd /opt/python && \
+    curl -O https://repo.anaconda.com/miniconda/Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh && \
+    bash Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
+    /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv
 
-RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    libffi-dev \
-    libgdbm-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    zlib1g-dev
-
-RUN mkdir -p /opt/Python && \
-    cd /opt/Python && \
-    wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
-    tar -xzvf Python-${PYTHON_VERSION}.tgz && \
-    cd Python-${PYTHON_VERSION} && \
-    ./configure --prefix=/opt/Python/${PYTHON_VERSION} --enable-shared --enable-ipv6 LDFLAGS=-Wl,-rpath=/opt/Python/${PYTHON_VERSION}/lib,--disable-new-dtags && \
-    make && \
-    make install && \
-    wget https://bootstrap.pypa.io/get-pip.py && \
-    /opt/Python/${PYTHON_VERSION}/bin/python${PYTHON_MAJOR_VERSION} get-pip.py && \
-    /opt/Python/${PYTHON_VERSION}/bin/pip install virtualenv && \
-    rm -rf /opt/Python/Python-${PYTHON_VERSION}.tar.gz && \
-    rm -rf /opt/Python/Python-${PYTHON_VERSION}
-
-ENV PATH="/opt/Python/${PYTHON_VERSION}/bin:${PATH}"
+ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install Jupyter Notebook and RSP/RSC Notebook Extensions --------------------#
 
-RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
+RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     jupyter \
     jupyterlab \
     rsp_jupyter \
     rsconnect_jupyter
 
-RUN /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
-    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
-    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
-    /opt/Python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
-    /opt/Python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
+RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
 
 # Install Python packages -----------------------------------------------------#
 
-RUN /opt/Python/${PYTHON_VERSION}/bin/pip install \
+RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     altair \
     beautifulsoup4 \
     cloudpickle \
@@ -147,7 +141,7 @@ RUN apt-get update -y && \
 
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
-    wget https://drivers.rstudio.org/${PRO_DRIVERS_VERSION}/odbc-install.sh && \
+    wget https://drivers.rstudio.org/7C152C12/odbc-install.sh && \
     bash odbc-install.sh --eula && \
     rm odbc-install.sh
 
