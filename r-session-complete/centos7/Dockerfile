@@ -96,7 +96,6 @@ RUN mkdir -p /opt/python && \
     /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
     rm -rf Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh
 
-
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install Jupyter Notebook and RSP/RSC Notebook Extensions --------------------#
