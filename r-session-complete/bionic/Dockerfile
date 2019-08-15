@@ -23,7 +23,7 @@ RUN apt-get update -y && \
     rrdtool \
     wget
 
-RUN wget https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
+RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \
     tar -zxvf ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz -C /usr/lib/rstudio-server/ && \
     mv /usr/lib/rstudio-server/rsp-session*/* /usr/lib/rstudio-server/ && \
@@ -69,9 +69,10 @@ RUN apt-get update -y && \
     wget \
     zlib1g-dev
 
-RUN curl -O R-${R_VERSION}.tar.gz https://cdn.rstudio.com/r/ubuntu-1804/R-${R_VERSION}-ubuntu-1804.tar.gz && \
+RUN curl -O https://cdn.rstudio.com/r/ubuntu-1804/R-${R_VERSION}-ubuntu-1804.tar.gz && \
     mkdir -p /opt/R && \
-    tar -xzC /opt/R -f ./R-${R_VERSION}.tar.gz
+    tar -xzC /opt/R -f ./R-${R_VERSION}-ubuntu-1804.tar.gz &&\
+    rm -rf R-${R_VERSION}-ubuntu-1804.tar.gz
 
 ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
 
@@ -88,7 +89,8 @@ RUN mkdir -p /opt/python && \
     cd /opt/python && \
     curl -O https://repo.anaconda.com/miniconda/Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh && \
     bash Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
-    /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv
+    /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
+    rm -rf Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh
 
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
@@ -141,7 +143,7 @@ RUN apt-get update -y && \
 
 RUN mkdir -p /opt/rstudio-drivers && \
     cd /opt/rstudio-drivers && \
-    wget https://drivers.rstudio.org/7C152C12/odbc-install.sh && \
+    curl -O https://drivers.rstudio.org/7C152C12/odbc-install.sh && \
     bash odbc-install.sh --eula && \
     rm odbc-install.sh
 
