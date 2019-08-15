@@ -47,7 +47,7 @@ RUN yum update -y && \
     yum install -y epel-release && \
     yum clean all
 
-sudo yum install \
+RUN yum install \
     atlas-devel \
     blas-devel \
     bzip2-devel \
