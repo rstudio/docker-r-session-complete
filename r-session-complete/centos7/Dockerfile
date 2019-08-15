@@ -69,7 +69,7 @@ sudo yum install \
     tk \
     xz-devel \
     zlib-devel \
-    @'Development Tools' \
+    @'Development Tools' && \
     yum clean all
 
 RUN curl -O R-${R_VERSION}.tar.gz https://cdn.rstudio.com/r/centos-7/R-${R_VERSION}-centos-7.tar.gz && \
