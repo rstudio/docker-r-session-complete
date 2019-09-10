@@ -49,7 +49,8 @@ RUN yum update -y && \
     yum clean all
 
 RUN curl -O https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
-    yum install R-${R_VERSION}-1-1.x86_64.rpm
+    yum install -y R-${R_VERSION}-1-1.x86_64.rpm && \
+    yum clean all
 
 RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R && \
     ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
@@ -121,7 +122,8 @@ RUN yum update -y && \
     yum clean all
 
 RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm && \
-    yum install rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm
+    yum install -y rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm && \
+    yum clean all
 
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")'
 
