@@ -64,6 +64,10 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://de
 
 # Install Python --------------------------------------------------------------#
 
+RUN yum update -y && \
+    yum install -y bzip2 && \
+    yum clean all
+
 RUN mkdir -p /opt/python && \
     cd /opt/python && \
     curl -O https://repo.anaconda.com/miniconda/Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh && \
