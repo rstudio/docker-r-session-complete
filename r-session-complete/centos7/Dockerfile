@@ -9,6 +9,7 @@ ARG R_VERSION=3.6.1
 ARG PYTHON_VERSION=3.6.8
 ARG PYTHON_MAJOR_VERSION=3
 ARG CONDA_VERSION=4.6.14
+ARG DRIVERS_VERSION=1.6.0-1
 
 # Install RStudio Server Pro session components -------------------------------#
 
@@ -47,45 +48,18 @@ RUN yum update -y && \
     yum install -y epel-release && \
     yum clean all
 
-RUN yum update -y && \
-    yum install -y \
-    atlas-devel \
-    blas-devel \
-    bzip2-devel \
-    gcc \
-    gcc-gfortran \
-    lapack-devel \
-    libSM \
-    libXmu \
-    libXt \
-    libcurl-devel \
-    libicu-devel \
-    libtiff \
-    openssl-devel \
-    pango \
-    pcre-devel \
-    pcre2-devel \
-    perl-Digest-MD5 \
-    tcl \
-    tk \
-    xz-devel \
-    zlib-devel \
-    @'Development Tools' && \
-    yum clean all
+RUN curl -O https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
+    yum install R-${R_VERSION}-1-1.x86_64.rpm
 
-RUN curl -O https://cdn.rstudio.com/r/centos-7/R-${R_VERSION}-centos-7.tar.gz && \
-    mkdir -p /opt/R && \
-    tar -xzC /opt/R -f ./R-${R_VERSION}-centos-7.tar.gz && \
-    rm -rf R-${R_VERSION}-centos-7.tar.gz
-
-ENV PATH="/opt/R/${R_VERSION}/bin:${PATH}"
+RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R && \
+    ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
 
 # Install R packages ----------------------------------------------------------#
 
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://cran.rstudio.com")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://cran.rstudio.com")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://cran.rstudio.com")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://cran.rstudio.com")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")'
 
 # Install Python --------------------------------------------------------------#
 
@@ -146,13 +120,10 @@ RUN yum update -y && \
     yum install -y unixODBC unixODBC-devel && \
     yum clean all
 
-RUN mkdir -p /opt/rstudio-drivers && \
-    cd /opt/rstudio-drivers && \
-    curl -O https://drivers.rstudio.org/7C152C12/odbc-install.sh && \
-    bash odbc-install.sh --eula && \
-    rm odbc-install.sh
+RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm && \
+    yum install rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm
 
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="http://cran.us.r-project.org")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")'
 
 # Locale configuration --------------------------------------------------------#
 
