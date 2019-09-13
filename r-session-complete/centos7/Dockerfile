@@ -6,9 +6,7 @@ LABEL maintainer="sol-eng@rstudio.com"
 ARG RSP_PLATFORM=centos6
 ARG RSP_VERSION=1.2.1578-2
 ARG R_VERSION=3.6.1
-ARG PYTHON_VERSION=3.6.8
-ARG PYTHON_MAJOR_VERSION=3
-ARG CONDA_VERSION=4.6.14
+ARG PYTHON_VERSION=3.6.9
 ARG DRIVERS_VERSION=1.6.0-1
 
 # Install RStudio Server Pro session components -------------------------------#
@@ -68,12 +66,11 @@ RUN yum update -y && \
     yum install -y bzip2 && \
     yum clean all
 
-RUN mkdir -p /opt/python && \
-    cd /opt/python && \
-    curl -O https://repo.anaconda.com/miniconda/Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh && \
-    bash Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
+RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
+    /opt/python/${PYTHON_VERSION}/bin/conda install -y python==${PYTHON_VERSION} && \
     /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
-    rm -rf Miniconda${PYTHON_MAJOR_VERSION}-${CONDA_VERSION}-Linux-x86_64.sh
+    rm -rf Miniconda3-latest-Linux-x86_64.sh
 
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
