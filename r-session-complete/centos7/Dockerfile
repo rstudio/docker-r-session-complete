@@ -6,7 +6,7 @@ LABEL maintainer="sol-eng@rstudio.com"
 ARG RSP_PLATFORM=centos6
 ARG RSP_VERSION=1.2.1578-2
 ARG R_VERSION=3.6.1
-ARG PYTHON_VERSION=3.6.8
+ARG PYTHON_VERSION=3.6.9
 ARG DRIVERS_VERSION=1.6.0-1
 
 # Install RStudio Server Pro session components -------------------------------#
