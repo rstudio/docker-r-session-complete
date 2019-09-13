@@ -62,7 +62,7 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://de
 RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     bash Miniconda3-latest-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
     /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
-    /opt/python/${PYTHON_VERSION}/bin/conda install python==${PYTHON_VERSION} && \
+    /opt/python/${PYTHON_VERSION}/bin/conda install -y python==${PYTHON_VERSION} && \
     rm -rf Miniconda3-latest-Linux-x86_64.sh
 
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
