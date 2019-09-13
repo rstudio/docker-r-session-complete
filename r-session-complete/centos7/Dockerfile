@@ -67,30 +67,30 @@ RUN yum update -y && \
     yum clean all
 
 RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash Miniconda3-latest-Linux-x86_64.sh -bp /opt/python/ && \
-    /opt/python/bin/pip install virtualenv && \
-    /opt/python/bin/conda create -n ${PYTHON_VERSION} python==${PYTHON_VERSION} && \
+    bash Miniconda3-latest-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
+    /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
+    /opt/python/${PYTHON_VERSION}/bin/conda install python==${PYTHON_VERSION} && \
     rm -rf Miniconda3-latest-Linux-x86_64.sh
 
-ENV PATH="/opt/python/envs/${PYTHON_VERSION}/bin:${PATH}"
+ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install Jupyter Notebook and RSP/RSC Notebook Extensions --------------------#
 
-RUN /opt/python/envs/${PYTHON_VERSION}/bin/pip install \
+RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     jupyter \
     jupyterlab \
     rsp_jupyter \
     rsconnect_jupyter
 
-RUN /opt/python/envs/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
-    /opt/python/envs/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
-    /opt/python/envs/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
-    /opt/python/envs/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
-    /opt/python/envs/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
+RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
 
 # Install Python packages -----------------------------------------------------#
 
-RUN /opt/python/envs/${PYTHON_VERSION}/bin/pip install \
+RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     altair \
     beautifulsoup4 \
     cloudpickle \
