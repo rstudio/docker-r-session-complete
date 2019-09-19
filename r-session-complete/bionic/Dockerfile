@@ -20,8 +20,7 @@ RUN apt-get update -y && \
     libssl-dev \
     libuser \
     libuser1-dev \
-    rrdtool \
-    wget
+    rrdtool
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \

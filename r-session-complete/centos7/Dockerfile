@@ -16,8 +16,7 @@ RUN yum update -y && \
     libcurl-devel \
     libuser-devel \
     openssl-devel \
-    rrdtool \
-    wget && \
+    rrdtool && \
     yum clean all
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
