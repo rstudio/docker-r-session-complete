@@ -12,7 +12,6 @@ ARG DRIVERS_VERSION=1.6.0-1
 # Install RStudio Server Pro session components -------------------------------#
 
 RUN yum update -y && \
-    yum install -y epel-release && \
     yum install -y \
     libcurl-devel \
     libuser-devel \
