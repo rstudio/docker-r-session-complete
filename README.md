@@ -46,13 +46,13 @@ steps:
 2. Run the following commands on the `master` branch, editing the version string
    as needed (where 1.2.XXX-X is the RSP version):
 
-```
-export VERSION=1.2.XXXX-X
-git commit -am "Release for image version ${VERSION}"
-git tag -a ${VERSION} -m "${VERSION}"
-git push origin ${VERSION}
-git push
-```
+   ```
+   export VERSION=1.2.XXXX-X
+   git commit -am "Release for image version ${VERSION}"
+   git tag -a ${VERSION} -m "${VERSION}"
+   git push origin ${VERSION}
+   git push
+   ```
 
 3. The new images will get built on Travis CI and get pushed to the
    [rstudio/r-session-complete](https://hub.docker.com/r/rstudio/r-session-complete)
