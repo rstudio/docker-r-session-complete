@@ -12,13 +12,11 @@ ARG DRIVERS_VERSION=1.6.0-1
 # Install RStudio Server Pro session components -------------------------------#
 
 RUN yum update -y && \
-    yum install -y epel-release && \
     yum install -y \
     libcurl-devel \
     libuser-devel \
     openssl-devel \
-    rrdtool \
-    wget && \
+    rrdtool && \
     yum clean all
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
