@@ -4,7 +4,7 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=trusty
-ARG RSP_VERSION=1.2.1578-4
+ARG RSP_VERSION=1.2.5001-3
 ARG R_VERSION=3.6.1
 ARG PYTHON_VERSION=3.6.9
 ARG DRIVERS_VERSION=1.6.0
