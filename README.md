@@ -7,6 +7,9 @@ Launcher, and Kubernetes.
 The Docker images built from these Dockerfiles are intended to be used for R and
 Jupyter sessions and jobs with RStudio Server Pro, Launcher, and Kubernetes.
 
+Note: These Docker images are not equipped or intended to be used to run RStudio
+Server Pro within a Docker container.
+
 For more information about RStudio Server Pro and Launcher, refer to the
 [Launcher Overview](https://solutions.rstudio.com/launcher/overview/) on the
 RStudio Solutions website.
