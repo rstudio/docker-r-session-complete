@@ -4,7 +4,7 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=trusty
-ARG RSP_VERSION=1.2.5008-1
+ARG RSP_VERSION=1.2.5019-6
 ARG R_VERSION=3.6.1
 ARG PYTHON_VERSION=3.6.9
 ARG DRIVERS_VERSION=1.6.0
@@ -58,11 +58,10 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://de
 
 # Install Python --------------------------------------------------------------#
 
-RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash Miniconda3-latest-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
-    /opt/python/${PYTHON_VERSION}/bin/conda install -y python==${PYTHON_VERSION} && \
+RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh && \
+    bash Miniconda3-4.5.4-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
     /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
-    rm -rf Miniconda3-latest-Linux-x86_64.sh
+    rm -rf Miniconda3-4.5.4-Linux-x86_64.sh
 
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
