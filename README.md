@@ -45,13 +45,14 @@ When builds on master are passing and you are ready to release a new version of
 the image on Docker Hub, you can tag a release on master using the following
 steps:
 
-1. Bump versions of RSP session components in Dockerfiles
+1. Bump versions of RSP session components in Dockerfiles in a PR, merge when
+   the build passes
 2. Run the following commands on the `master` branch, editing the version string
    as needed (where 1.2.XXX-X is the RSP version):
 
    ```
    export VERSION=1.2.XXXX-X
-   git commit -am "Release for image version ${VERSION}"
+   git commit -am "Release for image version ${VERSION}" --allow-empty
    git tag -a ${VERSION} -m "${VERSION}"
    git push origin ${VERSION}
    git push
