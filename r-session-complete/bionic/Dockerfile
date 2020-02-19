@@ -4,11 +4,11 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=trusty
-ARG RSP_VERSION=1.2.5033-1
-ARG R_VERSION=3.6.2
+ARG RSP_VERSION=1.3.820-1
+ARG R_VERSION=3.6.3
 ARG MINICONDA_VERSION=4.5.4
 ARG PYTHON_VERSION=3.6.5
-ARG DRIVERS_VERSION=1.6.0
+ARG DRIVERS_VERSION=1.6.1
 
 # Install RStudio Server Pro session components -------------------------------#
 
