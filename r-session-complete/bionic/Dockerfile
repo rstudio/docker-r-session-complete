@@ -66,13 +66,14 @@ RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-
 
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
-# Install Jupyter Notebook and RSP/RSC Notebook Extensions --------------------#
+# Install Jupyter Notebook and RSP/RSC Notebook Extensions and Packages -------#
 
 RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     jupyter \
     jupyterlab \
     rsp_jupyter \
-    rsconnect_jupyter
+    rsconnect_jupyter \
+    rsconnect_python
 
 RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
     /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
