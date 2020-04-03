@@ -48,10 +48,10 @@ steps:
 1. Bump versions of RSP session components in Dockerfiles in a PR, merge when
    the build passes
 2. Run the following commands on the `master` branch, editing the version string
-   as needed (where 1.2.XXX-X is the RSP version):
+   as needed (where 1.3.XXXX-X is the RSP version):
 
    ```
-   export VERSION=1.2.XXXX-X
+   export VERSION=1.3.XXXX-X
    git commit -am "Release for image version ${VERSION}" --allow-empty
    git tag -a ${VERSION} -m "${VERSION}"
    git push origin ${VERSION}
