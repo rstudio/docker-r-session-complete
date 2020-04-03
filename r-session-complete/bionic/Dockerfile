@@ -108,7 +108,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     tensorflow \
     xgboost
 
-RUN /opt/python/${PYTHON_VERSION}/pip install ipykernel && \
+RUN /opt/python/${PYTHON_VERSION}/bin/pip install ipykernel && \
     /opt/python/${PYTHON_VERSION}/bin/python -m ipykernel install --name py${PYTHON_VERSION} --display-name "Python ${PYTHON_VERSION}"
 
 RUN /opt/python/jupyter/bin/pip install \
