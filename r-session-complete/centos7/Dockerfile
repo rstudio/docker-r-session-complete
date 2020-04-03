@@ -7,7 +7,7 @@ ARG RSP_PLATFORM=centos6
 ARG RSP_VERSION=1.3.842-1
 ARG R_VERSION=3.6.2
 ARG MINICONDA_VERSION=4.5.4
-
+ARG PYTHON_VERSION=3.6.5
 ARG DRIVERS_VERSION=1.6.1-1
 
 # Install RStudio Server Pro session components -------------------------------#
