@@ -59,10 +59,6 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://de
 
 # Install Python environment for Jupyter --------------------------------------#
 
-RUN yum update -y && \
-    yum install -y bzip2 && \
-    yum clean all
-
 RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/jupyter && \
     /opt/python/jupyter/bin/pip install virtualenv && \
