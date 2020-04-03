@@ -122,7 +122,6 @@ RUN /opt/python/jupyter/bin/jupyter-nbextension install --sys-prefix --py rsp_ju
     /opt/python/jupyter/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
     /opt/python/jupyter/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
 
-
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers ----------------------------------------#
