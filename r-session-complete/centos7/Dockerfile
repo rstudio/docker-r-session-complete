@@ -7,7 +7,7 @@ ARG RSP_PLATFORM=centos6
 ARG RSP_VERSION=1.3.842-1
 ARG R_VERSION=3.6.2
 ARG MINICONDA_VERSION=4.5.4
-ARG PYTHON_VERSION=3.6.5
+
 ARG DRIVERS_VERSION=1.6.1-1
 
 # Install RStudio Server Pro session components -------------------------------#
@@ -72,21 +72,6 @@ RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-
 
 ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
-# Install Jupyter Notebook and RSP/RSC Notebook Extensions and Packages -------#
-
-RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
-    jupyter \
-    jupyterlab \
-    rsp_jupyter \
-    rsconnect_jupyter \
-    rsconnect_python
-
-RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
-    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
-    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
-    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
-    /opt/python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
-
 # Install Python packages -----------------------------------------------------#
 
 RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
@@ -114,6 +99,21 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     statsmodels \
     tensorflow \
     xgboost
+
+# Install Jupyter Notebook and RSP/RSC Notebook Extensions and Packages -------#
+
+RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
+    jupyter \
+    jupyterlab \
+    rsp_jupyter \
+    rsconnect_jupyter \
+    rsconnect_python
+
+RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsp_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsp_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
+    /opt/python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
