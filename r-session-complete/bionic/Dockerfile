@@ -21,7 +21,8 @@ RUN apt-get update -y && \
     libssl-dev \
     libuser \
     libuser1-dev \
-    rrdtool
+    rrdtool && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \
@@ -40,7 +41,8 @@ RUN apt-get update -y && \
     libssl1.0.0 \
     libuser \
     libxml2-dev \
-    subversion
+    subversion && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install R -------------------------------------------------------------------#
 
@@ -113,7 +115,8 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
 # Install RStudio Professional Drivers ----------------------------------------#
 
 RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev gdebi
+    DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev gdebi && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers_${DRIVERS_VERSION}_amd64.deb && \
     DEBIAN_FRONTEND=noninteractive gdebi --non-interactive rstudio-drivers_${DRIVERS_VERSION}_amd64.deb
@@ -123,7 +126,9 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://demo.r
 # Locale configuration --------------------------------------------------------#
 
 RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+    DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
