@@ -21,7 +21,8 @@ RUN apt-get update -y && \
     libssl-dev \
     libuser \
     libuser1-dev \
-    rrdtool
+    rrdtool && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \
@@ -40,12 +41,16 @@ RUN apt-get update -y && \
     libssl1.0.0 \
     libuser \
     libxml2-dev \
-    subversion
+    subversion && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install R -------------------------------------------------------------------#
 
 RUN curl -O https://cdn.rstudio.com/r/ubuntu-1804/pkgs/r-${R_VERSION}_1_amd64.deb && \
-    DEBIAN_FRONTEND=noninteractive gdebi --non-interactive r-${R_VERSION}_1_amd64.deb
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive gdebi --non-interactive r-${R_VERSION}_1_amd64.deb && \
+    rm -rf r-${R_VERSION}_1_amd64.deb && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R && \
     ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
@@ -123,17 +128,22 @@ ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 # Install RStudio Professional Drivers ----------------------------------------#
 
 RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev gdebi
+    DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc unixodbc-dev gdebi && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers_${DRIVERS_VERSION}_amd64.deb && \
-    DEBIAN_FRONTEND=noninteractive gdebi --non-interactive rstudio-drivers_${DRIVERS_VERSION}_amd64.deb
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive gdebi --non-interactive rstudio-drivers_${DRIVERS_VERSION}_amd64.deb && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://demo.rstudiopm.com/cran/__linux__/bionic/latest")'
 
 # Locale configuration --------------------------------------------------------#
 
 RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+    DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
