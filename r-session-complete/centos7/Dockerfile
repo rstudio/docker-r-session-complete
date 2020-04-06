@@ -60,30 +60,20 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://de
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://demo.rstudiopm.com/cran/__linux__/centos7/latest")'
 
-# Install Python environment for Jupyter --------------------------------------#
+# Install Python --------------------------------------------------------------#
 
 RUN yum update -y && \
     yum install -y bzip2 && \
     yum clean all
 
 RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/jupyter && \
-    /opt/python/jupyter/bin/pip install virtualenv && \
-    rm -rf Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
-
-RUN /opt/python/jupyter/bin/pip install \
-    jupyter \
-    jupyterlab
-
-RUN /opt/python/jupyter/bin/jupyter kernelspec remove python3 -f && \
-    /opt/python/jupyter/bin/pip uninstall -y ipykernel
-
-# Install additional Python environment/kernel for users ----------------------#
-
-RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
     /opt/python/${PYTHON_VERSION}/bin/pip install virtualenv && \
     rm -rf Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
+
+ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
+
+# Install Python packages -----------------------------------------------------#
 
 RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     altair \
@@ -111,10 +101,11 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     tensorflow \
     xgboost
 
-RUN /opt/python/${PYTHON_VERSION}/bin/pip install ipykernel && \
-    /opt/python/${PYTHON_VERSION}/bin/python -m ipykernel install --name py${PYTHON_VERSION} --display-name "Python ${PYTHON_VERSION}"
+# Install Jupyter Notebook and RSP/RSC Notebook Extensions and Packages -------#
 
 RUN /opt/python/jupyter/bin/pip install \
+    jupyter \
+    jupyterlab \
     rsp_jupyter \
     rsconnect_jupyter \
     rsconnect_python
@@ -124,8 +115,6 @@ RUN /opt/python/jupyter/bin/jupyter-nbextension install --sys-prefix --py rsp_ju
     /opt/python/jupyter/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
     /opt/python/jupyter/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
     /opt/python/jupyter/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
-
-ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
