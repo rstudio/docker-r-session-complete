@@ -5,10 +5,13 @@ Launcher, and Kubernetes.
 ## How to Use These Docker Images
 
 The Docker images built from these Dockerfiles are intended to be used for R and
-Jupyter sessions and jobs with RStudio Server Pro, Launcher, and Kubernetes.
+Jupyter sessions and jobs with RStudio Server Pro (RSP), Launcher, and
+Kubernetes.
 
 Note: These Docker images are not equipped or intended to be used to run RStudio
-Server Pro within a Docker container.
+Server Pro within a Docker container. Visit the
+[rstudio/rstudio-docker-products](https://github.com/rstudio/rstudio-docker-products)
+repository for images built for that purpose.
 
 For more information about RStudio Server Pro and Launcher, refer to the
 [Launcher Overview](https://solutions.rstudio.com/launcher/overview/) on the
@@ -57,6 +60,11 @@ steps:
    git push origin ${VERSION}
    git push
    ```
+
+   Note: Add the `-preview` suffix to tagged images that correspond to preview
+   release versions of RSP. Images related to preview builds are intended for
+   testing purposes, do not fall under our support agreement, and are not
+   recommended for use in production.
 
 3. The new images will get built on Travis CI and get pushed to the
    [rstudio/r-session-complete](https://hub.docker.com/r/rstudio/r-session-complete)
