@@ -63,8 +63,8 @@ steps:
 
    Note: Add the `-preview` suffix to tagged images that correspond to preview
    release versions of RSP. Images related to preview builds are intended for
-   testing purposes, do not fall under our support agreement, and are not
-   recommended for use in production.
+   testing purposes, subject to being removed, do not fall under our support
+   agreement, and are not recommended for use in production.
 
 3. The new images will get built on Travis CI and get pushed to the
    [rstudio/r-session-complete](https://hub.docker.com/r/rstudio/r-session-complete)
