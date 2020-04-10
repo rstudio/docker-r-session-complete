@@ -80,7 +80,9 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     beautifulsoup4 \
     cloudpickle \
     cython \
+    dash \
     dask \
+    flask \
     gensim \
     keras \
     matplotlib \
@@ -88,6 +90,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     numpy \
     pandas \
     pillow \
+    plotly \
     pyarrow \
     requests \
     scipy \
