@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
-ARG RSP_PLATFORM=xenial
+ARG RSP_PLATFORM=trusty
 ARG RSP_VERSION=1.2.5042-1
 ARG R_VERSION=3.6.3
 ARG MINICONDA_VERSION=py37_4.8.2
