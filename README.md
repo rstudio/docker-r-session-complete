@@ -1,4 +1,5 @@
-# docker-r-session
+# docker-r-session-complete
+
 Dockerfiles for R and Python sessions and jobs to be used RStudio Server Pro,
 Launcher, and Kubernetes.
 
