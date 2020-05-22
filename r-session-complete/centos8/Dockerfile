@@ -15,7 +15,7 @@ ARG DRIVERS_VERSION=1.6.1-1
 RUN yum update -y && \
     yum install -y \
     libcurl-devel \
-    libuser-devel \
+    libuser \
     openssl-devel \
     rrdtool && \
     yum clean all
