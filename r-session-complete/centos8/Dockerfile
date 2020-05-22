@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:8
 
 LABEL maintainer="sol-eng@rstudio.com"
 
@@ -15,7 +15,7 @@ ARG DRIVERS_VERSION=1.6.1-1
 RUN yum update -y && \
     yum install -y \
     libcurl-devel \
-    libuser-devel \
+    libuser \
     openssl-devel \
     rrdtool && \
     yum clean all
@@ -42,10 +42,11 @@ RUN yum update -y && \
 # Install R -------------------------------------------------------------------#
 
 RUN yum update -y && \
-    yum install -y epel-release && \
+    yum install -y epel-release dnf-plugins-core && \
+    dnf config-manager --set-enabled PowerTools && \
     yum clean all
 
-RUN curl -O https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
+RUN curl -O https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
     yum install -y R-${R_VERSION}-1-1.x86_64.rpm && \
     yum clean all && \
     rm -rf R-${R_VERSION}-1-1.x86_64.rpm
@@ -55,10 +56,10 @@ RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R && \
 
 # Install R packages ----------------------------------------------------------#
 
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://packagemanager.rstudio.com/cran/__linux__/centos8/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://packagemanager.rstudio.com/cran/__linux__/centos8/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://packagemanager.rstudio.com/cran/__linux__/centos8/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://packagemanager.rstudio.com/cran/__linux__/centos8/latest")'
 
 # Install Python --------------------------------------------------------------#
 
@@ -129,9 +130,13 @@ RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers-${DRI
     yum install -y rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm && \
     yum clean all
 
-RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")'
+RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://packagemanager.rstudio.com/cran/__linux__/centos8/latest")'
 
 # Locale configuration --------------------------------------------------------#
+
+RUN yum update -y && \
+    yum install -y glibc-locale-source glibc-langpack-en && \
+    yum clean all
 
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 ENV LANG en_US.UTF-8
