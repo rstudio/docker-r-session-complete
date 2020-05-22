@@ -17,7 +17,8 @@ RUN yum update -y && \
     libcurl-devel \
     libuser \
     openssl-devel \
-    rrdtool
+    rrdtool && \
+    yum clean all
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
     mkdir -p /usr/lib/rstudio-server && \
@@ -35,16 +36,19 @@ RUN yum update -y && \
     git \
     libxml2-devel \
     subversion \
-    which
+    which && \
+    yum clean all
 
 # Install R -------------------------------------------------------------------#
 
 RUN yum update -y && \
     yum install -y epel-release dnf-plugins-core && \
-    dnf config-manager --set-enabled PowerTools
+    dnf config-manager --set-enabled PowerTools && \
+    yum clean all
 
 RUN curl -O https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
     yum install -y R-${R_VERSION}-1-1.x86_64.rpm && \
+    yum clean all && \
     rm -rf R-${R_VERSION}-1-1.x86_64.rpm
 
 RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R && \
@@ -60,7 +64,8 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://pa
 # Install Python --------------------------------------------------------------#
 
 RUN yum update -y && \
-    yum install -y bzip2
+    yum install -y bzip2 && \
+    yum clean all
 
 RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -bp /opt/python/${PYTHON_VERSION} && \
@@ -118,10 +123,12 @@ RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
 # Install RStudio Professional Drivers ----------------------------------------#
 
 RUN yum update -y && \
-    yum install -y unixODBC unixODBC-devel
+    yum install -y unixODBC unixODBC-devel && \
+    yum clean all
 
 RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm && \
-    yum install -y rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm
+    yum install -y rstudio-drivers-${DRIVERS_VERSION}.el7.x86_64.rpm && \
+    yum clean all
 
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://packagemanager.rstudio.com/cran/__linux__/centos8/latest")'
 
