@@ -134,6 +134,10 @@ RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://packag
 
 # Locale configuration --------------------------------------------------------#
 
+RUN yum update -y && \
+    yum install -y glibc-locale-source glibc-langpack-en && \
+    yum clean all
+
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
