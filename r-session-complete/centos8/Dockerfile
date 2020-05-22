@@ -43,9 +43,10 @@ RUN yum update -y && \
 
 RUN yum update -y && \
     yum install -y epel-release && \
+    dnf config-manager --set-enabled PowerTools && \
     yum clean all
 
-RUN curl -O https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
+RUN curl -O https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && \
     yum install -y R-${R_VERSION}-1-1.x86_64.rpm && \
     yum clean all && \
     rm -rf R-${R_VERSION}-1-1.x86_64.rpm
