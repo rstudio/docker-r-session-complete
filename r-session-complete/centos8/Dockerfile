@@ -42,7 +42,7 @@ RUN yum update -y && \
 # Install R -------------------------------------------------------------------#
 
 RUN yum update -y && \
-    yum install -y epel-release dnf && \
+    yum install -y epel-release dnf-plugins-core && \
     dnf config-manager --set-enabled PowerTools && \
     yum clean all
 
