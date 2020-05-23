@@ -58,7 +58,8 @@ RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R && \
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("devtools", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("tidyverse", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
     /opt/R/${R_VERSION}/bin/R -e 'install.packages("shiny", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
-    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")'
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("rmarkdown", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")' && \
+    /opt/R/${R_VERSION}/bin/R -e 'install.packages("plumber", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")'
 
 # Install Python --------------------------------------------------------------#
 
