@@ -77,6 +77,7 @@ ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     altair \
     beautifulsoup4 \
+    bokeh \
     cloudpickle \
     cython \
     dash \
@@ -100,6 +101,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     spacy \
     sqlalchemy \
     statsmodels \
+    streamlit \
     tensorflow \
     xgboost
 
