@@ -4,10 +4,10 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=centos6
-ARG RSP_VERSION=1.3.959-1
-ARG R_VERSION=3.6.3
-ARG MINICONDA_VERSION=py37_4.8.2
-ARG PYTHON_VERSION=3.7.6
+ARG RSP_VERSION=1.3.1054-1
+ARG R_VERSION=4.0.2
+ARG MINICONDA_VERSION=py37_4.8.3
+ARG PYTHON_VERSION=3.7.7
 ARG DRIVERS_VERSION=1.6.1-1
 
 # Install RStudio Server Pro session components -------------------------------#
@@ -79,6 +79,7 @@ ENV PATH="/opt/python/${PYTHON_VERSION}/bin:${PATH}"
 RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     altair \
     beautifulsoup4 \
+    bokeh \
     cloudpickle \
     cython \
     dash \
@@ -102,6 +103,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/pip install \
     spacy \
     sqlalchemy \
     statsmodels \
+    streamlit \
     tensorflow \
     xgboost
 
