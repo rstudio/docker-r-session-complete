@@ -21,6 +21,7 @@ RUN apt-get update -y && \
     libssl-dev \
     libuser \
     libuser1-dev \
+    libpq-dev \
     rrdtool && \
     rm -rf /var/lib/apt/lists/*
 

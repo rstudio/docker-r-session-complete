@@ -17,6 +17,7 @@ RUN yum update -y && \
     libcurl-devel \
     libuser-devel \
     openssl-devel \
+    postgresql-libs \
     rrdtool && \
     yum clean all
 
