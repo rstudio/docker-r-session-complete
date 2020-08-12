@@ -4,7 +4,7 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=xenial
-ARG RSP_VERSION=1.4.693-5
+ARG RSP_VERSION=1.4.702-1
 ARG R_VERSION=4.0.2
 ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
@@ -21,6 +21,7 @@ RUN apt-get update -y && \
     libssl-dev \
     libuser \
     libuser1-dev \
+    libpq-dev \
     rrdtool && \
     rm -rf /var/lib/apt/lists/*
 
