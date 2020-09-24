@@ -4,11 +4,12 @@ LABEL maintainer="sol-eng@rstudio.com"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=xenial
-ARG RSP_VERSION=1.4.800-1
+ARG RSP_VERSION=1.4.865-1
 ARG R_VERSION=4.0.2
 ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
 ARG DRIVERS_VERSION=1.6.1
+ARG CODE_SERVER_VERSION=3.2.0 #NOTE: Versions 3.4 and up require "v" to put in front of version number
 
 # Install RStudio Server Pro session components -------------------------------#
 
@@ -120,6 +121,13 @@ RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
     /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix --py rsconnect_jupyter && \
     /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension enable --sys-prefix --py rsconnect_jupyter && \
     /opt/python/${PYTHON_VERSION}/bin/jupyter-serverextension enable --sys-prefix --py rsconnect_jupyter
+
+# Install VSCode code-server --------------------------------------------------#
+
+RUN curl -o code-server.tar.gz https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-x86_64.tar.gz && \
+    mkdir -p /opt/code-server && \
+    tar -zxvf ./code-server.tar.gz -C /opt/code-server/ && \
+    rm -f ./code-server.tar.gz
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
