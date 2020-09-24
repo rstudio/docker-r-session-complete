@@ -9,7 +9,8 @@ ARG R_VERSION=4.0.2
 ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
 ARG DRIVERS_VERSION=1.6.1
-ARG CODE_SERVER_VERSION=3.2.0 #NOTE: Versions 3.4 and up require "v" to put in front of version number
+# NOTE: code-server Versions 3.4 and up require "v" to put in front of version number
+ARG CODE_SERVER_VERSION=3.2.0
 
 # Install RStudio Server Pro session components -------------------------------#
 
