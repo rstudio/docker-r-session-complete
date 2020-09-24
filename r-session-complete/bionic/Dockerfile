@@ -125,7 +125,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
 
 # Install VSCode code-server --------------------------------------------------#
 
-RUN curl -o code-server.tar.gz https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-x86_64.tar.gz && \
+RUN curl -o code-server.tar.gz -L https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-x86_64.tar.gz && \
     mkdir -p /opt/code-server && \
     tar -zxvf ./code-server.tar.gz -C /opt/code-server/ && \
     rm -f ./code-server.tar.gz
