@@ -1,6 +1,6 @@
 FROM ubuntu:bionic
 
-LABEL maintainer="sol-eng@rstudio.com"
+LABEL maintainer="RStudio Docker <docker@rstudio.com>"
 
 # Set versions and platforms
 ARG RSP_PLATFORM=xenial
@@ -32,7 +32,9 @@ RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/r
     tar -zxvf ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz -C /usr/lib/rstudio-server/ && \
     mv /usr/lib/rstudio-server/rsp-session*/* /usr/lib/rstudio-server/ && \
     rm -rf /usr/lib/rstudio-server/rsp-session* && \
-    rm -f ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz
+    rm -f ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
+    # write session version to a file
+    echo "${RSP_VERSION}" > /usr/lib/rstudio-server/SESSION_VERSION
 
 EXPOSE 8788/tcp
 
