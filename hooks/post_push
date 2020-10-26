@@ -10,7 +10,8 @@ imageStart=$(expr index "$IMAGE_NAME" /)
 repoName=${IMAGE_NAME:0:tagStart-1}
 imageName=${IMAGE_NAME:imageStart:${#IMAGE_NAME}-tagStart-1}
 
-if [ "${DOCKER_TAG}" != "bionic" ] && [ "${DOCKER_TAG}" != "centos7" ]; then
+# Only tag version for "preview" repository, "bionic" and "centos7" images
+if [ "${DOCKER_TAG}" != "bionic" ] && [ "${DOCKER_TAG}" != "centos7" ] && [[ "${repoName}" != *"preview"* ]]; then
   echo "Non-release build - exiting and not tagging version number"
   exit 0
 fi
