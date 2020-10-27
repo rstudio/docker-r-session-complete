@@ -42,4 +42,3 @@ These images include the following layers:
 * Jupyter Notebooks, JupyterLab, and RSP/RSC notebook extensions
 * Python packages
 * RStudio Professional Drivers
-
