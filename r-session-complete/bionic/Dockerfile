@@ -160,7 +160,7 @@ RUN curl -o cuda-download.deb -L http://developer.download.nvidia.com/compute/cu
 RUN curl -O http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive gdebi --non-interactive nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb && \
-    rm -rf /var/lib/apt/lists/* &&
+    rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y cuda libcudnn7 libcudnn7-dev libnvinfer6 libnvinfer-dev libnvinfer-plugin6 && \
