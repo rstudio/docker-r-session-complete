@@ -147,6 +147,22 @@ RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers-${DRI
 
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")'
 
+# Install cuda ----------------------------------------------------------------#
+
+RUN yum update -y && \
+    yum install -y gnupg && \
+    yum clean all
+
+RUN yum -y install http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm && \
+    yum clean all
+    
+RUN yum -y install http://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/x86_64/nvidia-machine-learning-repo-rhel7-1.0.0-1.x86_64.rpm && \
+    yum clean all
+
+RUN yum update -y && \
+    yum install -y cuda libcudnn7 libcudnn7-dev libnvinfer6 libnvinfer-dev libnvinfer-plugin6 && \
+    yum clean all
+
 # Locale configuration --------------------------------------------------------#
 
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8
