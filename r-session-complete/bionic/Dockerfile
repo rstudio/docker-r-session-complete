@@ -43,6 +43,7 @@ EXPOSE 8788/tcp
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     git \
+    libgit2-dev \
     libssl1.0.0 \
     libuser \
     libxml2-dev \

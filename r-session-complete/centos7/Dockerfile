@@ -39,6 +39,7 @@ EXPOSE 8788/tcp
 RUN yum update -y && \
     yum install -y \
     git \
+    libgit2-devel \
     libxml2-devel \
     subversion \
     which && \
