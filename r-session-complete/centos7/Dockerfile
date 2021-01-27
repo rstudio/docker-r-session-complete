@@ -20,7 +20,8 @@ RUN yum update -y && \
     libuser-devel \
     openssl-devel \
     postgresql-libs \
-    rrdtool && \
+    rrdtool \
+    sudo && \
     yum clean all
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \

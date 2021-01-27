@@ -24,7 +24,8 @@ RUN apt-get update -y && \
     libuser \
     libuser1-dev \
     libpq-dev \
-    rrdtool && \
+    rrdtool \
+    sudo && \
     rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
