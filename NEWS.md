@@ -11,6 +11,7 @@ code-server is at `/opt/code-server/code-server`
 
 - `BREAKING`: Changed code-server version and insulated against version upgrades in the future. To update:
 change:
+
 _vscode.conf_
 ```
 enabled=1
@@ -22,6 +23,8 @@ _vscode.conf_
 enabled=1
 exe=/opt/code-server/code-server
 ```
+
+- Update Drivers to version 1.7.0
 
 # 1.4.1103-4
 
