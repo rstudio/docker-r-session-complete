@@ -127,7 +127,8 @@ RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
 
 # Install VSCode code-server --------------------------------------------------#
 
-RUN curl -o code-server.tar.gz -L https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz && \
+# TODO: remove the temporary regex to resolve different behavior for code-server
+RUN curl -o code-server.tar.gz -L https://github.com/cdr/code-server/releases/download/$( echo $CODE_SERVER_VERSION | sed -r 's/(3\.2\.0)/\1/; t; s/([0-9]\.[0-9]\.[0-9])/v\1/' )/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz && \
     mkdir -p /opt/code-server && \
     tar -zxvf ./code-server.tar.gz -C /opt/code-server/ --strip-components 1 && \
     rm -f ./code-server.tar.gz
