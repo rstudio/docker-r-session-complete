@@ -1,6 +1,7 @@
 R_VERSION ?= 3.6.2
 
 RSP_VERSION ?= 1.4.1106-5
+CODE_SERVER_VERSION ?= 3.4.1
 
 SHELL := bash
 .ONESHELL:
@@ -14,3 +15,7 @@ update-versions:  ## Update the version files for all products
 	@sed -i '' "s/^RSP_VERSION=.*/RSP_VERSION=${RSP_VERSION}/g" r-session-complete/centos7/.env
 	@sed -i '' "s/^ARG RSP_VERSION=.*/ARG RSP_VERSION=${RSP_VERSION}/g" r-session-complete/bionic/Dockerfile
 	@sed -i '' "s/^ARG RSP_VERSION=.*/ARG RSP_VERSION=${RSP_VERSION}/g" r-session-complete/centos7/Dockerfile
+	@sed -i '' "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/bionic/.env
+	@sed -i '' "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/centos7/.env
+	@sed -i '' "s/^ARG CODE_SERVER_VERSION=.*/ARG CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/bionic/Dockerfile
+	@sed -i '' "s/^ARG CODE_SERVER_VERSION=.*/ARG CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/centos7/Dockerfile
