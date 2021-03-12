@@ -9,7 +9,8 @@ ARG R_VERSION=4.0.2
 ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
 ARG DRIVERS_VERSION=1.7.0-1
-ARG CODE_SERVER_VERSION=3.4.1
+# versions > 3.4.0 require a "v" prefix
+ARG CODE_SERVER_VERSION=3.2.0
 
 # Install RStudio Server Pro session components -------------------------------#
 
@@ -128,7 +129,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
 
 # Install VSCode code-server --------------------------------------------------#
 
-RUN curl -o code-server.tar.gz -L https://github.com/cdr/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz && \
+RUN curl -o code-server.tar.gz -L https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz && \
     mkdir -p /opt/code-server && \
     tar -zxvf ./code-server.tar.gz -C /opt/code-server/ --strip-components 1 && \
     rm -f ./code-server.tar.gz
