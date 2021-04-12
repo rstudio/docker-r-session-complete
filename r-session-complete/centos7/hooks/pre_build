@@ -15,13 +15,16 @@ replace_base_url_s3() {
 replace_code_version() {
   sed -i.bak "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=$1/g" ./.env
 }
+replace_platform() {
+  sed -i.bak "s/^RSP_PLATFORM=.*/RSP_PLATFORM=$1/g" ./.env
+}
 
 # if daily build
 # replace version number and download url
 if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
   echo "--> Running daily"
   # get daily version
-  rawpage=`curl -s https://dailies.rstudio.com/rstudioserver/pro/bionic/x86_64/`
+  rawpage=`curl -sL https://dailies.rstudio.com/rstudioserver/pro/bionic/x86_64/`
 
   # thanks to https://stackoverflow.com/a/44490624/6570011
   if [[ "$rawpage" =~ rstudio-workbench-([0-9\.\-]*)-amd64.deb ]]; then
@@ -31,6 +34,8 @@ if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
     replace_base_url_s3
     # TODO: Need a way to get daily code version dynamically
     replace_code_version 3.8.1
+    # TODO: Need a way to get the platform dynamically
+    replace_platform bionic
   else
     # fail the build
     echo "ERROR parsing latest daily version"
@@ -39,7 +44,7 @@ if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
 elif [[ "${DOCKER_TAG}" == *"preview"* ]]; then
   echo "--> Running preview"
   # get raw downloads.json
-  rawjson=`curl -s https://rstudio.com/wp-content/downloads.json`
+  rawjson=`curl -sL https://rstudio.com/wp-content/downloads.json`
 
   # use jq to parse
   full_url=`echo -n $rawjson | jq -r '.rstudio.pro.preview.server.installer.bionic.url'`

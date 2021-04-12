@@ -15,6 +15,9 @@ replace_base_url_s3() {
 replace_code_version() {
   sed -i.bak "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=$1/g" ./.env
 }
+replace_platform() {
+  sed -i.bak "s/^RSP_PLATFORM=.*/RSP_PLATFORM=$1/g" ./.env
+}
 
 # if daily build
 # replace version number and download url
@@ -31,6 +34,8 @@ if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
     replace_base_url_s3
     # TODO: Need a way to get daily code version dynamically
     replace_code_version 3.8.1
+    # TODO: Need a way to get the platform dynamically
+    replace_platform bionic
   else
     # fail the build
     echo "ERROR parsing latest daily version"
