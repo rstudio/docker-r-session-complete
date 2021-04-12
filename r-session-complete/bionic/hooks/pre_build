@@ -21,7 +21,7 @@ replace_code_version() {
 if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
   echo "--> Running daily"
   # get daily version
-  rawpage=`curl -s https://dailies.rstudio.com/rstudioserver/pro/bionic/x86_64/`
+  rawpage=`curl -sL https://dailies.rstudio.com/rstudioserver/pro/bionic/x86_64/`
 
   # thanks to https://stackoverflow.com/a/44490624/6570011
   if [[ "$rawpage" =~ rstudio-workbench-([0-9\.\-]*)-amd64.deb ]]; then
@@ -39,7 +39,7 @@ if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
 elif [[ "${DOCKER_TAG}" == *"preview"* ]]; then
   echo "--> Running preview"
   # get raw downloads.json
-  rawjson=`curl -s https://rstudio.com/wp-content/downloads.json`
+  rawjson=`curl -sL https://rstudio.com/wp-content/downloads.json`
 
   # use jq to parse
   full_url=`echo -n $rawjson | jq -r '.rstudio.pro.preview.server.installer.bionic.url'`
