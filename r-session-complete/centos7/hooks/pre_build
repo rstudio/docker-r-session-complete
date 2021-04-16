@@ -35,7 +35,7 @@ if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
     # TODO: Need a way to get daily code version dynamically
     replace_code_version 3.8.1
     # TODO: Need a way to get the platform dynamically
-    replace_platform bionic
+    replace_platform centos7
   else
     # fail the build
     echo "ERROR parsing latest daily version"
