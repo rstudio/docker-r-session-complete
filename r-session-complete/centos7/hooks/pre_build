@@ -10,7 +10,7 @@ replace_version() {
   sed -i.bak "s/^RSP_VERSION=.*/RSP_VERSION=$1/g" ./.env
 }
 replace_base_url_s3() {
-  sed -i.bak "s|^RSP_DOWNLOAD_URL=.*|RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64|g" ./.env
+  sed -i.bak "s|^RSP_DOWNLOAD_URL=.*|RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/centos7/amd64|g" ./.env
 }
 replace_code_version() {
   sed -i.bak "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=$1/g" ./.env
