@@ -57,7 +57,7 @@ elif [[ "${DOCKER_TAG}" == *"preview"* ]]; then
   replace_base_url_s3
 
   # TODO: Need a way to get daily code version dynamically
-  replace_code_version 3.8.1
+  #replace_code_version 3.8.1
 
 else
   echo "No version customization necessary"
