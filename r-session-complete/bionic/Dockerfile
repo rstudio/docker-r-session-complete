@@ -10,7 +10,7 @@ ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
 ARG DRIVERS_VERSION=1.7.0
 # versions > 3.4.0 require a "v" prefix
-ARG CODE_SERVER_VERSION=3.2.0
+ARG CODE_SERVER_VERSION=3.9.3
 
 # Install RStudio Server Pro session components -------------------------------#
 
