@@ -3,8 +3,6 @@ FROM ubuntu:bionic
 LABEL maintainer="RStudio Docker <docker@rstudio.com>"
 
 # Set versions and platforms
-ARG RSP_PLATFORM=xenial
-ARG RSP_VERSION=1.4.1106-5
 ARG R_VERSION=4.0.2
 ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
@@ -25,14 +23,18 @@ RUN apt-get update -y && \
     rrdtool && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
-    mkdir -p /usr/lib/rstudio-server && \
-    tar -zxvf ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz -C /usr/lib/rstudio-server/ && \
-    mv /usr/lib/rstudio-server/rsp-session*/* /usr/lib/rstudio-server/ && \
-    rm -rf /usr/lib/rstudio-server/rsp-session* && \
-    rm -f ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
-    # write session version to a file
-    echo "${RSP_VERSION}" > /usr/lib/rstudio-server/SESSION_VERSION
+ARG RSP_VERSION=1.4.1106-5
+ARG RSP_NAME=rstudio-server-pro
+ARG RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64
+RUN apt-get update --fix-missing \
+    && apt-get install -y gdebi-core \
+    && curl -O ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-amd64.deb \
+    && gdebi --non-interactive ${RSP_NAME}-${RSP_VERSION}-amd64.deb \
+    && rm ${RSP_NAME}-${RSP_VERSION}-amd64.deb \
+    # && apt-get remove gdebi-core -y \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8788/tcp
 
