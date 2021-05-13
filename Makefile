@@ -15,7 +15,3 @@ update-versions:  ## Update the version files for all products
 	@sed -i '' "s/^RSP_VERSION=.*/RSP_VERSION=${RSP_VERSION}/g" r-session-complete/centos7/.env
 	@sed -i '' "s/^ARG RSP_VERSION=.*/ARG RSP_VERSION=${RSP_VERSION}/g" r-session-complete/bionic/Dockerfile
 	@sed -i '' "s/^ARG RSP_VERSION=.*/ARG RSP_VERSION=${RSP_VERSION}/g" r-session-complete/centos7/Dockerfile
-	@sed -i '' "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/bionic/.env
-	@sed -i '' "s/^CODE_SERVER_VERSION=.*/CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/centos7/.env
-	@sed -i '' "s/^ARG CODE_SERVER_VERSION=.*/ARG CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/bionic/Dockerfile
-	@sed -i '' "s/^ARG CODE_SERVER_VERSION=.*/ARG CODE_SERVER_VERSION=${CODE_SERVER_VERSION}/g" r-session-complete/centos7/Dockerfile
