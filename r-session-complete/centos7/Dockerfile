@@ -23,8 +23,8 @@ ARG RSP_VERSION=1.4.1106-5
 ARG RSP_NAME=rstudio-server-rhel-pro
 ARG RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/centos7/x86_64
 RUN curl -O ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-x86_64.rpm \
-    && yum install -y ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-x86_64.rpm \
-    && rm ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-x86_64.rpm \
+    && yum install -y ${RSP_NAME}-${RSP_VERSION}-x86_64.rpm \
+    && rm ${RSP_NAME}-${RSP_VERSION}-x86_64.rpm \
     && yum clean all
 
 EXPOSE 8788/tcp
