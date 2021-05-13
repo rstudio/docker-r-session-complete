@@ -5,12 +5,6 @@ file:
     exists: true
 
 command:
-  # "cat /usr/lib/rstudio-server/SESSION_VERSION":
-  #   title: session_version_matches
-  #   exit-status: 0
-  #   stdout: [
-  #     "/{{ .Env.RSP_VERSION }}/",
-  #   ]
   "echo '{ \"cells\": [], \"metadata\": {}, \"nbformat\": 4, \"nbformat_minor\": 2}' | /opt/python/3.7.7/bin/jupyter nbconvert --to notebook --stdin --stdout":
     title: jupyter_works
     exit-status: 0

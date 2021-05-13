@@ -32,7 +32,6 @@ RUN apt-get update --fix-missing \
     && curl -O ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-amd64.deb \
     && gdebi --non-interactive ${RSP_NAME}-${RSP_VERSION}-amd64.deb \
     && rm ${RSP_NAME}-${RSP_VERSION}-amd64.deb \
-    # && apt-get remove gdebi-core -y \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
