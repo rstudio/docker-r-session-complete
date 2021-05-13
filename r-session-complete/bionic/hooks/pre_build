@@ -12,8 +12,8 @@ replace_version() {
 replace_base_url_s3() {
   sed -i.bak "s|^RSP_DOWNLOAD_URL=.*|RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64|g" ./.env
 }
-replace_platform() {
-  sed -i.bak "s/^RSP_PLATFORM=.*/RSP_PLATFORM=$1/g" ./.env
+replace_name() {
+  sed -i.bak "s/^RSP_NAME=.*/RSP_NAME=$1/g" ./.env
 }
 
 # if daily build
@@ -29,8 +29,7 @@ if [[ "${DOCKER_TAG}" == *"daily"* ]]; then
     echo "Latest version found: $match"
     replace_version $match
     replace_base_url_s3
-    # TODO: Need a way to get the platform dynamically
-    replace_platform bionic
+    replace_name rstudio-workbench
   else
     # fail the build
     echo "ERROR parsing latest daily version"
@@ -50,6 +49,7 @@ elif [[ "${DOCKER_TAG}" == *"preview"* ]]; then
   # update .env
   replace_version $version
   replace_base_url_s3
+  replace_name rstudio-workbench
 
 else
   echo "No version customization necessary"
