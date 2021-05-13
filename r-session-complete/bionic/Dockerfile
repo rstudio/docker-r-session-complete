@@ -3,20 +3,17 @@ FROM ubuntu:bionic
 LABEL maintainer="RStudio Docker <docker@rstudio.com>"
 
 # Set versions and platforms
-ARG RSP_PLATFORM=xenial
-ARG RSP_VERSION=1.4.1106-5
 ARG R_VERSION=4.0.2
 ARG MINICONDA_VERSION=py37_4.8.3
 ARG PYTHON_VERSION=3.7.7
 ARG DRIVERS_VERSION=1.7.0
-# versions > 3.4.0 require a "v" prefix
-ARG CODE_SERVER_VERSION=3.2.0
 
 # Install RStudio Server Pro session components -------------------------------#
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     curl \
+    wget \
     gdebi \
     libcurl4-gnutls-dev \
     libssl1.0.0 \
@@ -27,14 +24,17 @@ RUN apt-get update -y && \
     rrdtool && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/session/${RSP_PLATFORM}/rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
-    mkdir -p /usr/lib/rstudio-server && \
-    tar -zxvf ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz -C /usr/lib/rstudio-server/ && \
-    mv /usr/lib/rstudio-server/rsp-session*/* /usr/lib/rstudio-server/ && \
-    rm -rf /usr/lib/rstudio-server/rsp-session* && \
-    rm -f ./rsp-session-${RSP_PLATFORM}-${RSP_VERSION}.tar.gz && \
-    # write session version to a file
-    echo "${RSP_VERSION}" > /usr/lib/rstudio-server/SESSION_VERSION
+ARG RSP_VERSION=1.4.1106-5
+ARG RSP_NAME=rstudio-server-pro
+ARG RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64
+RUN apt-get update --fix-missing \
+    && apt-get install -y gdebi-core \
+    && curl -O ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-amd64.deb \
+    && gdebi --non-interactive ${RSP_NAME}-${RSP_VERSION}-amd64.deb \
+    && rm ${RSP_NAME}-${RSP_VERSION}-amd64.deb \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8788/tcp
 
@@ -127,11 +127,7 @@ RUN /opt/python/${PYTHON_VERSION}/bin/jupyter-nbextension install --sys-prefix -
 
 # Install VSCode code-server --------------------------------------------------#
 
-# TODO: remove the temporary regex to resolve different behavior for code-server
-RUN curl -o code-server.tar.gz -L https://github.com/cdr/code-server/releases/download/$( echo $CODE_SERVER_VERSION | sed -r 's/(3\.2\.0)/\1/; t; s/([0-9]\.[0-9]\.[0-9])/v\1/' )/code-server-${CODE_SERVER_VERSION}-linux-$( echo $CODE_SERVER_VERSION | sed -r 's/(3\.2\.0)/x86_64/; t; s/([0-9]\.[0-9]\.[0-9])/amd64/' ).tar.gz && \
-    mkdir -p /opt/code-server && \
-    tar -zxvf ./code-server.tar.gz -C /opt/code-server/ --strip-components 1 && \
-    rm -f ./code-server.tar.gz
+RUN rstudio-server install-vs-code /opt/code-server/
 
 # Install RStudio Professional Drivers ----------------------------------------#
 
