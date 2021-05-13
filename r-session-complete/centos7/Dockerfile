@@ -33,6 +33,7 @@ EXPOSE 8788/tcp
 
 RUN yum update -y && \
     yum install -y \
+    wget \
     git \
     libxml2-devel \
     subversion \
