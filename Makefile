@@ -15,3 +15,6 @@ update-versions:  ## Update the version files for all products
 	@sed -i '' "s/^RSP_VERSION=.*/RSP_VERSION=${RSP_VERSION}/g" r-session-complete/centos7/.env
 	@sed -i '' "s/^ARG RSP_VERSION=.*/ARG RSP_VERSION=${RSP_VERSION}/g" r-session-complete/bionic/Dockerfile
 	@sed -i '' "s/^ARG RSP_VERSION=.*/ARG RSP_VERSION=${RSP_VERSION}/g" r-session-complete/centos7/Dockerfile
+
+build:
+	find r-session-complete -type d -maxdepth 1 -mindepth 1 -exec docker build {} -t '{}' \;

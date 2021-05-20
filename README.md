@@ -3,6 +3,11 @@
 Dockerfiles for R and Python sessions and jobs to be used RStudio Server Pro,
 Launcher, and Kubernetes.
 
+**IMPORTANT:** There are a few things you need to know before using these images:
+1. These images are provided as a convenience to RStudio customers and are not formally supported by RStudio. If you have questions about these images, you can ask them in the issues in the repository or to your support representative, who will route them appropriately.
+1. Outdated images will be removed periodically from DockerHub as product version updates are made.  Please make plans to update at times or use your own build of the images.
+1. These images are meant as a starting point for your needs. Consider creating a fork of this repo, where you can continue to merge in changes we make while having your own security scanning, base OS in use, or other custom changes.  We provide [instructions for building](https://github.com/rstudio/docker-r-session-complete#instructions-for-building) for these cases.
+
 ## How to Use These Docker Images
 
 The Docker images built from these Dockerfiles are intended to be used for R and
@@ -42,3 +47,14 @@ These images include the following layers:
 * Jupyter Notebooks, JupyterLab, and RSP/RSC notebook extensions
 * Python packages
 * RStudio Professional Drivers
+
+# Instructions for building
+
+After you have cloned [docker-r-session-complete](https://github.com/rstudio/docker-r-session-complete), you can create your own containers fairly simply with the provided Makefile.
+
+To build all images:
+```
+make build
+```
+
+The images built will be tagged as `r-session-complete/os-name`
