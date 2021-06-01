@@ -19,7 +19,7 @@ RUN yum update -y && \
     rrdtool && \
     yum clean all
 
-ARG RSP_VERSION=1.4.1106-5
+ARG RSP_VERSION=1.4.1717-3
 ARG RSP_NAME=rstudio-server-rhel-pro
 ARG RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/centos7/x86_64
 RUN curl -O ${RSP_DOWNLOAD_URL}/${RSP_NAME}-${RSP_VERSION}-x86_64.rpm \
