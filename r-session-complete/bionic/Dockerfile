@@ -24,8 +24,8 @@ RUN apt-get update -y && \
     rrdtool && \
     rm -rf /var/lib/apt/lists/*
 
-ARG RSP_VERSION=1.4.1106-5
-ARG RSP_NAME=rstudio-server-pro
+ARG RSP_VERSION=1.4.1717-3
+ARG RSP_NAME=rstudio-workbench
 ARG RSP_DOWNLOAD_URL=https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64
 RUN apt-get update --fix-missing \
     && apt-get install -y gdebi-core \
