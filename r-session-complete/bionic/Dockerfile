@@ -143,6 +143,26 @@ RUN curl -O https://drivers.rstudio.org/7C152C12/installer/rstudio-drivers_${DRI
 
 RUN /opt/R/${R_VERSION}/bin/R -e 'install.packages("odbc", repos="https://packagemanager.rstudio.com/cran/__linux__/bionic/latest")'
 
+# Install cuda ----------------------------------------------------------------#
+
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN curl -o cuda-download.deb -L http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.2.89-1_amd64.deb && \
+    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub && \
+    dpkg -i cuda-download.deb && \
+    apt-get update -y
+    
+RUN curl -O http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive gdebi --non-interactive nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y cuda libcudnn7 libcudnn7-dev libnvinfer6 libnvinfer-dev libnvinfer-plugin6 && \
+    rm -rf /var/lib/apt/lists/*
+
 # Locale configuration --------------------------------------------------------#
 
 RUN apt-get update -y && \
